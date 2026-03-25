@@ -17,6 +17,7 @@ export function ActionButton({
 }: ActionButtonProps) {
   return (
     <Button
+      variant="brand"
       disabled={loading || disabled}
       className={cn("font-semibold", className)}
       {...props}

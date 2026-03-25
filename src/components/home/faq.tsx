@@ -24,8 +24,8 @@ const faqs: FAQ[] = [
     question: "How can I create an account?",
     answer: (
       <>
-        Sign in with <span className="text-primary">Google</span> or{" "}
-        <span className="text-primary">GitHub</span>, or enter your email to
+        Sign in with <span className="text-brand">Google</span> or{" "}
+        <span className="text-brand">GitHub</span>, or enter your email to
         receive a confirmation link.
       </>
     ),
@@ -51,14 +51,14 @@ function Header() {
     <div className="text-center mb-10 sm:mb-16 max-w-3xl mx-auto">
       <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight mb-6">
         Frequently Asked{" "}
-        <span className="text-primary relative">
+        <span className="text-brand relative">
           Questions
           <motion.span
             initial={{ width: 0 }}
             whileInView={{ width: "100%" }}
             transition={{ delay: 0.5, duration: 0.8 }}
             viewport={{ once: true }}
-            className="absolute bottom-0 left-0 h-1 bg-linear-to-r from-primary to-transparent rounded-full"
+            className="absolute bottom-0 left-0 h-1 bg-linear-to-r from-brand to-transparent rounded-full"
           />
         </span>
       </h2>
@@ -75,11 +75,11 @@ function AccordionSection() {
   return (
     <Accordion type="single" collapsible defaultValue="item-1">
       {faqs.map((faq, index) => (
-        <AccordionItem key={index} value={`item-${index}`}>
+        <AccordionItem key={index} value={`item-${index}`} className="py-2">
           <AccordionTrigger className="font-semibold sm:text-lg">
             {faq.question}
           </AccordionTrigger>
-          <AccordionContent className="text-slate-600 dark:text-muted-foreground">
+          <AccordionContent className="text-slate-600 dark:text-muted-foreground sm:text-lg">
             {faq.answer}
           </AccordionContent>
         </AccordionItem>

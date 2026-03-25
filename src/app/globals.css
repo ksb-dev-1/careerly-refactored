@@ -6,6 +6,8 @@
 
 @theme inline {
   --max-width-custom: var(--width);
+  --color-brand: var(--brand);
+  --color-brand-hover: var(--brand-hover);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-sans);
@@ -51,6 +53,8 @@
 
 :root {
   --width: 64rem;
+  --brand: #0a66c2;
+  --brand-hover: #0d59a5;
   --background: oklch(1 0 0);
   --foreground: oklch(0.148 0.004 228.8);
   --card: oklch(1 0 0);
@@ -74,7 +78,7 @@
   --chart-3: oklch(0.45 0.017 213.2);
   --chart-4: oklch(0.378 0.015 216);
   --chart-5: oklch(0.275 0.011 216.9);
-  --radius: 0.625rem;
+  --radius: 0.5rem;
   --sidebar: oklch(0.987 0.002 197.1);
   --sidebar-foreground: oklch(0.148 0.004 228.8);
   --sidebar-primary: oklch(0.648 0.2 131.684);
@@ -87,6 +91,8 @@
 
 .dark {
   --width: 64rem;
+  --brand: #f4b400;
+  --brand-hover: #d9a001;
   --background: oklch(0.148 0.004 228.8);
   --foreground: oklch(0.987 0.002 197.1);
   --card: oklch(0.218 0.008 223.9);
@@ -191,7 +197,7 @@
 
 body {
   overflow-x: hidden;
-  /* font-weight: 600; */
+  font-weight: 600;
 }
 
 body[data-scroll-locked] .fixed {

@@ -18,7 +18,7 @@ export function AnimatedUnderline() {
   return (
     <motion.div
       data-testid="animated-underline"
-      className="w-24 h-1 bg-primary rounded mx-auto mt-6 origin-center"
+      className="w-24 h-1 bg-brand rounded mx-auto mt-6 origin-center"
       variants={underlineItem}
       initial="hidden"
       animate="show"

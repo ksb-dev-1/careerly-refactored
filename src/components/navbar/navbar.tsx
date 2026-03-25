@@ -82,7 +82,7 @@ function NavbarWrapper({
       <nav className="flex items-center justify-between max-w-custom w-full px-4">
         <CustomLink
           href="/"
-          className="font-extrabold text-xl text-primary hover:text-primary/80 transition-colors flex items-center gap-1"
+          className="font-extrabold text-xl text-brand hover:text-brand-hover transition-colors flex items-center gap-1"
           isActive={path === "/"}
         >
           Careerly
@@ -117,7 +117,7 @@ function NavbarWithoutAuth({ session }: { session: Session }) {
     <NavbarWrapper session={session}>
       <div className="hidden md:flex items-center gap-2">
         <ThemeSwitch />
-        <Button>
+        <Button variant="outline" className="rounded-full">
           <CustomLink href="/sign-in" isActive={path === "/sign-in"}>
             Sign in
           </CustomLink>
@@ -155,7 +155,7 @@ function JobSeekerNavbar({ session }: { session: UserSession }) {
               key={href}
               asChild
               variant="ghost"
-              className={`${isActive ? "text-primary hover:text-primary" : ""} rounded-full`}
+              className={`${isActive ? "text-brand hover:text-brand" : ""} rounded-full`}
             >
               <CustomLink
                 href={href}
@@ -193,7 +193,7 @@ function EmployerNavbar({ session }: { session: UserSession }) {
               key={href}
               asChild
               variant="ghost"
-              className={`${isActive ? "text-primary hover:text-primary" : ""} rounded-full`}
+              className={`${isActive ? "text-brand hover:text-brand" : ""} rounded-full`}
             >
               <CustomLink href={href} prefetch={false} isActive={isActive}>
                 {label}
@@ -239,7 +239,7 @@ function SideMenu({ session }: { session: Session }) {
 
       <SheetContent side="left" className="w-60 gap-0 p-0!">
         <SheetHeader className="p-0!">
-          <SheetTitle className="text-primary text-xl font-extrabold border-b h-16 p-4 flex items-center gap-1">
+          <SheetTitle className="text-brand text-xl font-extrabold border-b h-16 p-4 flex items-center gap-1">
             Careerly
           </SheetTitle>
         </SheetHeader>
@@ -272,7 +272,7 @@ function SideMenu({ session }: { session: Session }) {
                       prefetch={false}
                       isActive={isActive}
                       onClick={() => setIsOpen(false)}
-                      className={`${isActive ? "text-primary" : "hover:bg-muted"} flex items-center gap-2 rounded-lg p-2`}
+                      className={`${isActive ? "text-brand" : "hover:bg-muted"} flex items-center gap-2 rounded-lg p-2`}
                     >
                       {icon} {label}
                     </CustomLink>
@@ -292,7 +292,7 @@ function SideMenu({ session }: { session: Session }) {
                       prefetch={false}
                       isActive={isActive}
                       onClick={() => setIsOpen(false)}
-                      className={`${isActive ? "text-primary" : "hover:bg-muted"} flex items-center gap-2 rounded-lg p-2`}
+                      className={`${isActive ? "text-brand" : "hover:bg-muted"} flex items-center gap-2 rounded-lg p-2`}
                     >
                       {icon} {label}
                     </CustomLink>

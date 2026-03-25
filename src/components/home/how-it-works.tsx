@@ -61,14 +61,14 @@ function Header() {
     <div className="text-center mb-10 sm:mb-16 max-w-3xl mx-auto">
       <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight mb-6">
         How It{" "}
-        <span className="text-primary relative">
+        <span className="text-brand relative">
           Works
           <motion.span
             initial={{ width: 0 }}
             whileInView={{ width: "100%" }}
             transition={{ delay: 0.5, duration: 0.8 }}
             viewport={{ once: true }}
-            className="absolute bottom-0 left-0 h-1 bg-linear-to-r from-primary to-transparent rounded-full"
+            className="absolute bottom-0 left-0 h-1 bg-linear-to-r from-brand to-transparent rounded-full"
           />
         </span>
       </h2>
@@ -97,11 +97,11 @@ function ReusableCard({ icon, title, description, steps }: ReusableCardProps) {
   return (
     <Card>
       <CardHeader className="flex items-start gap-4">
-        <div className="relative bg-primary/10 text-primary h-12 w-12 rounded-lg flex items-center justify-center">
+        <div className="relative bg-brand/10 text-brand h-12 w-12 rounded-lg flex items-center justify-center">
           {icon}
         </div>
         <div>
-          <CardTitle className="text-lg font-bold text-primary">
+          <CardTitle className="text-lg font-bold text-brand">
             {title}
           </CardTitle>
           <CardDescription className="mt-1 text-slate-600 dark:text-muted-foreground">

@@ -84,14 +84,14 @@ function Header() {
     <div className="text-center mb-10 sm:mb-16 max-w-3xl mx-auto">
       <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight mb-6">
         Powerful{" "}
-        <span className="text-primary relative">
+        <span className="text-brand relative">
           Features
           <motion.span
             initial={{ width: 0 }}
             whileInView={{ width: "100%" }}
             transition={{ delay: 0.5, duration: 0.8 }}
             viewport={{ once: true }}
-            className="absolute bottom-0 left-0 h-1 bg-linear-to-r from-primary to-transparent rounded-full"
+            className="absolute bottom-0 left-0 h-1 bg-linear-to-r from-brand to-transparent rounded-full"
           />
         </span>
       </h2>
@@ -116,7 +116,7 @@ function Toggle({
         <motion.div
           layout
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
-          className="absolute top-1 bottom-1 w-1/2 rounded-full bg-primary"
+          className="absolute top-1 bottom-1 w-1/2 rounded-full bg-brand"
           style={{
             left: mode === "jobseeker" ? "4px" : "calc(50% - 4px)",
           }}
@@ -128,7 +128,7 @@ function Toggle({
           ${
             mode === "jobseeker"
               ? "text-white dark:text-background"
-              : "hover:text-primary"
+              : "hover:text-brand"
           }`}
         >
           Job Seeker
@@ -140,7 +140,7 @@ function Toggle({
           ${
             mode === "employer"
               ? "text-white dark:text-background"
-              : "hover:text-primary"
+              : "hover:text-brand"
           }`}
         >
           Employer
@@ -177,7 +177,7 @@ function FeaturesSection({
         >
           <div className="h-full border p-4 md:p-6 rounded-xl bg-card group shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 ease-out">
             <div className="flex flex-col gap-3">
-              <div className="flex items-center justify-center h-11 w-11 rounded-lg bg-primary/10 text-primary group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-300">
+              <div className="flex items-center justify-center h-11 w-11 rounded-lg bg-brand/10 text-brand group-hover:bg-brand/20 group-hover:scale-110 transition-all duration-300">
                 <feature.icon size={18} />
               </div>
 
