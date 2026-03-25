@@ -229,15 +229,11 @@ function SideMenu({ session }: { session: Session }) {
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
-      {session?.user ? (
-        <SheetTrigger asChild>
-          <Menu className="md:hidden" />
-        </SheetTrigger>
-      ) : (
-        <Skeleton className="h-9 w-9 rounded-md md:hidden" />
-      )}
+      <SheetTrigger asChild>
+        <Menu className="md:hidden" />
+      </SheetTrigger>
 
-      <SheetContent side="left" className="w-60 gap-0 p-0!">
+      <SheetContent side="left" className="w-60! gap-0 p-0!">
         <SheetHeader className="p-0!">
           <SheetTitle className="text-brand text-xl font-extrabold border-b h-16 p-4 flex items-center gap-1">
             Careerly
@@ -250,7 +246,7 @@ function SideMenu({ session }: { session: Session }) {
               <nav className="flex flex-col gap-1 mt-4">
                 <Button
                   asChild
-                  variant="outline"
+                  variant="brand"
                   className="justify-start w-fit"
                   onClick={() => setIsOpen(false)}
                 >
@@ -338,7 +334,6 @@ function SideMenu({ session }: { session: Session }) {
               </button>
             )}
           </div>
-
           <div className="p-2">
             <ThemeSwitchMobile />
           </div>
