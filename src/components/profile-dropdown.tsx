@@ -9,7 +9,7 @@ import { LogOut, User } from "lucide-react";
 import { toast } from "sonner";
 
 import { authClient } from "@/lib/auth-client";
-import { ROUTES } from "@/lib/client-navigation-paths";
+import { ROUTES } from "@/lib/routes";
 
 import { Avatar, AvatarFallback } from "./ui/avatar";
 import {

@@ -1,7 +1,8 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Get a free hosted Postgres database in seconds: `npx create-db`
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
   provider = "prisma-client"
@@ -12,6 +13,47 @@ datasource db {
   provider = "postgresql"
 }
 
+enum JobStatus {
+  OPEN
+  CLOSED
+}
+
+enum ApplicationStatus {
+  PENDING
+  APPROVED
+  OFFERED
+  REJECTED
+}
+
+enum JobType {
+  FULL_TIME
+  PART_TIME
+  INTERNSHIP
+}
+
+enum JobMode {
+  ONSITE
+  REMOTE
+  HYBRID
+}
+
+enum Currency {
+  USD
+  INR
+  EUR
+}
+
+enum SalaryPeriod { 
+  YEARLY
+  MONTHLY
+}
+
+enum UserRole {
+  JOB_SEEKER
+  EMPLOYER
+  NOT_ASSIGNED
+}
+
 model User {
   id               String    @id
   name             String
@@ -19,10 +61,18 @@ model User {
   emailVerified    Boolean   @default(false)
   image            String?
   imagePublicId    String?
+  role             UserRole  @default(NOT_ASSIGNED)
   createdAt        DateTime  @default(now())
   updatedAt        DateTime  @updatedAt
   sessions         Session[]
   accounts         Account[]
+
+  bookmarks        Bookmark[]
+  applications     JobApplication[]
+  resume           Resume?
+  jobs             Job[]
+  employerProfile  EmployerProfile?
+  jobSeekerProfile JobSeekerProfile?
 
   @@map("user")
 }
@@ -75,4 +125,185 @@ model Verification {
   @@map("verification")
 }
 
+model Skill {
+  id   String @id @default(uuid())
+  name String @unique  // e.g. "React", "Python"
 
+  jobs     JobSkill[]
+  seekers  JobSeekerProfile[] @relation("SeekerSkills")
+}
+
+model JobSkill {
+  jobId   String
+  skillId String
+  job     Job   @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  skill   Skill @relation(fields: [skillId], references: [id], onDelete: Cascade)
+
+  @@id([jobId, skillId])
+}
+
+model Job {
+  id           String   @id @default(uuid())
+  employerId   String?
+  employer     User?    @relation(fields: [employerId], references: [id], onDelete: SetNull)
+
+  companyLogo  String?
+  companyName  String
+  role         String
+
+  jobType      JobType  @default(FULL_TIME)
+  jobMode      JobMode  @default(ONSITE)
+
+  location     String
+  salary       Int
+  salaryPeriod SalaryPeriod @default(YEARLY) 
+  currency     Currency @default(INR)
+
+  experienceMin Int?
+  experienceMax Int?
+
+  openings     Int @default(1)
+
+  skills       JobSkill[]
+
+  description  String
+
+  jobStatus    JobStatus @default(OPEN)
+
+  isFeatured   Boolean @default(false)
+  isDeleted    Boolean @default(false)
+  deletedAt    DateTime?
+
+  bookmarks    Bookmark[]
+  applications JobApplication[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([jobStatus, isDeleted, createdAt(sort: Desc)])
+
+  @@index([jobType])
+  @@index([jobMode])
+  @@index([employerId])
+  @@index([role])         
+  @@index([location])     
+  @@index([companyName])  
+  @@index([isFeatured])
+}
+
+model Bookmark {
+  id     String @id @default(uuid())
+  userId String
+  jobId  String
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  job  Job  @relation(fields: [jobId], references: [id], onDelete: Restrict)
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, jobId])
+  @@index([userId])
+  @@index([jobId])
+}
+
+model JobApplication {
+  id                String            @id @default(uuid())
+  userId            String
+  jobId             String
+  applicationStatus ApplicationStatus @default(PENDING)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  job  Job  @relation(fields: [jobId], references: [id], onDelete: Restrict)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, jobId])
+  @@index([jobId])
+  @@index([applicationStatus])
+}
+
+model Resume {
+  id       String @id @default(uuid())
+  url      String
+  publicId String
+  fileName String
+  fileSize Int?
+
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model EmployerProfile {
+  id     String @id @default(uuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  companyName         String?
+  industry            String?
+  location            String?
+  about               String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model JobSeekerProfile {
+  id     String @id @default(uuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  experience Int?
+  skills     Skill[]  @relation("SeekerSkills")
+
+  projects   Project[]
+  socials    SocialLink[]
+
+  location String?
+  about    String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Project {
+  id                 String @id @default(uuid())
+  jobSeekerProfileId String
+  jobSeekerProfile JobSeekerProfile @relation(fields: [jobSeekerProfileId], references: [id], onDelete: Cascade)
+
+  name String
+  link String
+
+  createdAt DateTime @default(now())
+
+  @@index([jobSeekerProfileId])
+}
+
+model SocialLink {
+  id                 String @id @default(uuid())
+  jobSeekerProfileId String
+  jobSeekerProfile JobSeekerProfile @relation(fields: [jobSeekerProfileId], references: [id], onDelete: Cascade)
+
+  platform String
+  url      String
+
+  createdAt DateTime @default(now())
+
+  @@index([jobSeekerProfileId])
+}
+
+// enum Category {
+//   DEVELOPMENT
+//   UI_UX_DESIGN
+//   AI_SERVICES
+//   HUMAN_RESEARCH
+//   BUSINESS_ANALYSIS
+//   DIGITAL_MARKETING
+//   VIDEO_AND_ANIMATION
+//   MUSIC_AND_AUDIO
+//   CONSULTING
+//   CUSTOMER_SUPPORT
+// }

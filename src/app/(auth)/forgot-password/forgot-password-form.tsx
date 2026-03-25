@@ -20,7 +20,7 @@ import {
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth-client";
-import { ROUTES } from "@/lib/client-navigation-paths";
+import { ROUTES } from "@/lib/routes";
 import { ForgotPasswordValues, forgotPasswordSchema } from "@/lib/validation";
 
 export function ForgotPasswordForm() {
@@ -34,12 +34,10 @@ export function ForgotPasswordForm() {
     },
   });
 
-  // Reset form on mount
   useEffect(() => {
     form.reset(form.formState.defaultValues);
   }, [form]);
 
-  // Handle form submit
   async function onSubmit({ email }: ForgotPasswordValues) {
     setSuccessMessage(null);
     setErrorMessage(null);
@@ -88,7 +86,6 @@ export function ForgotPasswordForm() {
           )}
 
           <form onSubmit={form.handleSubmit(onSubmit)}>
-            {/* Email */}
             <Controller
               name="email"
               control={form.control}
@@ -110,7 +107,6 @@ export function ForgotPasswordForm() {
               )}
             />
 
-            {/* Send password reset link button */}
             <ActionButton loading={loading} className="w-full mt-4">
               Send password reset link
             </ActionButton>

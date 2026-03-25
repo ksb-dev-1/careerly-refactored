@@ -42,6 +42,15 @@ export const auth = betterAuth({
       clientSecret: process.env.GITHUB_CLIENT_SECRET!,
     },
   },
+  user: {
+    additionalFields: {
+      role: {
+        type: "string",
+        // required: true,
+        input: false,
+      },
+    },
+  },
   // If your application runs on a port other than 3000, you must add it to the trustedOrigins
   //   trustedOrigins: ["http://localhost:3001"],
 });

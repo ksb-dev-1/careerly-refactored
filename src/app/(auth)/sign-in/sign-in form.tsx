@@ -33,7 +33,7 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth-client";
-import { ROUTES } from "@/lib/client-navigation-paths";
+import { ROUTES } from "@/lib/routes";
 import { SignInValues, signInSchema } from "@/lib/validation";
 
 export function SignInForm() {
@@ -52,12 +52,10 @@ export function SignInForm() {
     },
   });
 
-  // Reset form on mount
   useEffect(() => {
     form.reset(form.formState.defaultValues);
   }, [form]);
 
-  // Handle form submit
   async function onSubmit({ email, password, rememberMe }: SignInValues) {
     setErrorMessage(null);
 
@@ -71,18 +69,17 @@ export function SignInForm() {
       setErrorMessage(error.message || "Something went wrong");
     } else {
       toast.success("Signed in successfully");
-      router.push(ROUTES.DASHBOARD);
+      router.push(ROUTES.SELECT_USER_ROLE);
     }
   }
 
-  // Handle social sign-in
   async function handleSocialSignIn(provider: "github" | "google") {
     setLoadingProvider(provider);
     setErrorMessage(null);
 
     const result = await authClient.signIn.social({
       provider,
-      callbackURL: ROUTES.DASHBOARD,
+      callbackURL: ROUTES.SELECT_USER_ROLE,
     });
 
     if (result?.error) {
@@ -114,7 +111,6 @@ export function SignInForm() {
 
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <FieldGroup>
-              {/* Email */}
               <Controller
                 name="email"
                 control={form.control}
@@ -136,7 +132,6 @@ export function SignInForm() {
                 )}
               />
 
-              {/* Password */}
               <Controller
                 name="password"
                 control={form.control}
@@ -151,7 +146,6 @@ export function SignInForm() {
               />
             </FieldGroup>
 
-            {/* Remember me */}
             <Controller
               name="rememberMe"
               control={form.control}
@@ -172,14 +166,12 @@ export function SignInForm() {
               )}
             />
 
-            {/* Sign in button */}
             <ActionButton loading={loading} className="w-full mt-4">
               Sign in
             </ActionButton>
           </form>
 
           <div className="grid grid-cols-2 gap-4 border-t pt-6 mt-6">
-            {/* Sign in with google button */}
             <Button
               variant="outline"
               disabled={loadingProvider !== null}
@@ -189,7 +181,6 @@ export function SignInForm() {
               <FcGoogle /> Google {loadingProvider === "google" && <Spinner />}
             </Button>
 
-            {/* Sign in with github button */}
             <Button
               variant="outline"
               disabled={loadingProvider !== null}

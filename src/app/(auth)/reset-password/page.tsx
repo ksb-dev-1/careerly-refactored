@@ -4,7 +4,7 @@ import { Metadata } from "next";
 
 import { CustomLink } from "@/components/custom-link";
 import { LoadingFallback } from "@/components/loading-fallback";
-import { ROUTES } from "@/lib/client-navigation-paths";
+import { ROUTES } from "@/lib/routes";
 
 import { ResetPasswordForm } from "./reset-password-form";
 

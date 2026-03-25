@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/card";
 import { FieldGroup } from "@/components/ui/field";
 import { authClient } from "@/lib/auth-client";
-import { ROUTES } from "@/lib/client-navigation-paths";
+import { ROUTES } from "@/lib/routes";
 import { ResetPasswordValues, resetPasswordSchema } from "@/lib/validation";
 
 export function ResetPasswordForm({ token }: { token: string }) {
@@ -35,12 +35,10 @@ export function ResetPasswordForm({ token }: { token: string }) {
     },
   });
 
-  // Reset form on mount
   useEffect(() => {
     form.reset(form.formState.defaultValues);
   }, [form]);
 
-  // Handle form submit
   async function onSubmit({ newPassword }: ResetPasswordValues) {
     setSuccessMessage(null);
     setErrorMessage(null);
@@ -88,7 +86,6 @@ export function ResetPasswordForm({ token }: { token: string }) {
 
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <FieldGroup>
-              {/* Password */}
               <Controller
                 name="newPassword"
                 control={form.control}
@@ -102,7 +99,6 @@ export function ResetPasswordForm({ token }: { token: string }) {
                 )}
               />
 
-              {/* Confirm Password */}
               <Controller
                 name="passwordConfirmation"
                 control={form.control}
@@ -117,7 +113,6 @@ export function ResetPasswordForm({ token }: { token: string }) {
               />
             </FieldGroup>
 
-            {/* Send password reset link button */}
             <ActionButton loading={loading} className="w-full mt-4">
               Send password reset link
             </ActionButton>

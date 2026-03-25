@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 
 import { LoadingFallback } from "@/components/loading-fallback";
 import { authClient } from "@/lib/auth-client";
-import { ROUTES } from "@/lib/client-navigation-paths";
+import { ROUTES } from "@/lib/routes";
 
 import { ResendVerificationButton } from "./resend-verification-button";
 

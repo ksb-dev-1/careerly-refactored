@@ -2,11 +2,11 @@ import { Suspense } from "react";
 
 import { Geist, Geist_Mono, Mulish } from "next/font/google";
 
+// import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
-import { ThemeProvider } from "next-themes";
 
-import { Navbar } from "@/components/navbar";
 import { NavigationProgress } from "@/components/navigation-progress";
+import { Providers } from "@/components/providers/providers";
 import { cn } from "@/lib/utils";
 
 import "./globals.css";
@@ -49,19 +49,14 @@ export default function RootLayout({
       )}
       suppressHydrationWarning={true}
     >
-      <body className="min-h-full flex flex-col">
+      <body>
         <Suspense>
           <NavigationProgress />
         </Suspense>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <Navbar />
-          {children}
-        </ThemeProvider>
+        <Providers>
+          <main>{children}</main>
+          {/* <SpeedInsights /> */}
+        </Providers>
       </body>
     </html>
   );

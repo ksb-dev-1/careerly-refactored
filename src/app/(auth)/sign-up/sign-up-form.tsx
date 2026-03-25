@@ -28,12 +28,9 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth-client";
-import { ROUTES } from "@/lib/client-navigation-paths";
+import { ROUTES } from "@/lib/routes";
 import { SignUpValues, signUpSchema } from "@/lib/validation";
 
-// ========================================
-// Sign-up form component
-// ========================================
 export function SignUpForm() {
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
@@ -48,12 +45,10 @@ export function SignUpForm() {
     },
   });
 
-  // Reset form on mount
   useEffect(() => {
     form.reset(form.formState.defaultValues);
   }, [form]);
 
-  // Handle form submit
   async function onSubmit({ email, password, name }: SignUpValues) {
     setError(null);
 
@@ -86,7 +81,6 @@ export function SignUpForm() {
         </CardHeader>
 
         <CardContent>
-          {/* Error message */}
           {error && (
             <Alert variant="error" className="mb-4 flex items-center flex-wrap">
               {error}
@@ -95,7 +89,6 @@ export function SignUpForm() {
 
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <FieldGroup>
-              {/* Name */}
               <Controller
                 name="name"
                 control={form.control}
@@ -117,7 +110,6 @@ export function SignUpForm() {
                 )}
               />
 
-              {/* Email */}
               <Controller
                 name="email"
                 control={form.control}
@@ -139,7 +131,6 @@ export function SignUpForm() {
                 )}
               />
 
-              {/* Password */}
               <Controller
                 name="password"
                 control={form.control}
@@ -153,7 +144,6 @@ export function SignUpForm() {
                 )}
               />
 
-              {/* Confirm Password */}
               <Controller
                 name="passwordConfirmation"
                 control={form.control}
@@ -168,7 +158,6 @@ export function SignUpForm() {
               />
             </FieldGroup>
 
-            {/* Sign up button */}
             <ActionButton loading={loading} className="w-full mt-4">
               Create an account
             </ActionButton>
