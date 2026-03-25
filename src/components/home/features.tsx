@@ -82,7 +82,7 @@ const employerFeatures: Feature[] = [
 function Header() {
   return (
     <div className="text-center mb-10 sm:mb-16 max-w-3xl mx-auto">
-      <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight mb-6">
+      <h2 className="text-4xl font-extrabold tracking-tight mb-6">
         Powerful{" "}
         <span className="text-brand relative">
           Features

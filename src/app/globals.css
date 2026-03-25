@@ -197,7 +197,7 @@
 
 body {
   overflow-x: hidden;
-  font-weight: 600;
+  /* font-weight: 600; */
 }
 
 body[data-scroll-locked] .fixed {

@@ -6,7 +6,7 @@ export function StartExploringButton() {
     <div className="flex items-center">
       <CustomLink
         href={ROUTES.SIGN_IN}
-        className="bg-brand font-semibold shadow-md rounded-full px-6 py-4 hover:bg-brand-hover transition text-white dark:text-background"
+        className="bg-brand font-semibold shadow-md rounded-full px-5 py-3 hover:bg-brand-hover transition text-white dark:text-background"
         prefetch
       >
         Start Exploring

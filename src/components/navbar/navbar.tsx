@@ -117,7 +117,7 @@ function NavbarWithoutAuth({ session }: { session: Session }) {
     <NavbarWrapper session={session}>
       <div className="hidden md:flex items-center gap-2">
         <ThemeSwitch />
-        <Button variant="outline" className="rounded-full">
+        <Button variant="brand" className="rounded-full">
           <CustomLink href="/sign-in" isActive={path === "/sign-in"}>
             Sign in
           </CustomLink>
