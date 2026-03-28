@@ -21,6 +21,14 @@ export const JOB_SEEKER_ROUTES = {
   EDIT_PROFILE: "/job-seeker/profile/edit",
 } as const;
 
+export const JOB_SEEKER_API_ROUTES = {
+  JOBS_API: "/api/job-seeker/jobs",
+  JOB_DETAILS_API: (jobId: string | number) => `/api/job-seeker/jobs/${jobId}`,
+  BOOKMARKS_API: "/api/job-seeker/bookmarks",
+  APPLICATIONS_API: "/api/job-seeker/applications",
+  PROFILE_API: "/api/job-seeker/profile",
+};
+
 export const EMPLOYER_ROUTES = {
   BASE: "/employer",
   JOBS: "/employer/jobs?page=1",

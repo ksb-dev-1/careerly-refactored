@@ -44,38 +44,40 @@ export function JobPagination({ totalPages }: JobPaginationProps) {
         </Button>
 
         {/* Page Numbers */}
-        {Array.from({ length: totalPages }).map((_, i) => {
-          const page = i + 1;
-          const isActive = page === currentPage;
+        <div className="flex items-center gap-1 mx-1">
+          {Array.from({ length: totalPages }).map((_, i) => {
+            const page = i + 1;
+            const isActive = page === currentPage;
 
-          if (
-            page !== 1 &&
-            page !== totalPages &&
-            Math.abs(page - currentPage) > 1
-          ) {
-            if (page === currentPage - 2 || page === currentPage + 2) {
-              return <PaginationEllipsis key={page} />;
+            if (
+              page !== 1 &&
+              page !== totalPages &&
+              Math.abs(page - currentPage) > 1
+            ) {
+              if (page === currentPage - 2 || page === currentPage + 2) {
+                return <PaginationEllipsis key={page} />;
+              }
+              return null;
             }
-            return null;
-          }
 
-          return (
-            <Button
-              key={page}
-              asChild
-              variant="outline"
-              size="sm"
-              className={isActive ? "pointer-events-none text-brand" : ""}
-            >
-              <CustomLink
-                href={isActive ? "#" : createPageLink(page)}
-                aria-current={isActive ? "page" : undefined}
+            return (
+              <Button
+                key={page}
+                asChild
+                variant="outline"
+                size="sm"
+                className={isActive ? "pointer-events-none text-brand" : ""}
               >
-                {page}
-              </CustomLink>
-            </Button>
-          );
-        })}
+                <CustomLink
+                  href={isActive ? "#" : createPageLink(page)}
+                  aria-current={isActive ? "page" : undefined}
+                >
+                  {page}
+                </CustomLink>
+              </Button>
+            );
+          })}
+        </div>
 
         {/* Next */}
         <Button asChild variant="outline" size="sm">
