@@ -12,6 +12,7 @@ import {
   Menu,
   User,
 } from "lucide-react";
+import { LuFileCheck } from "react-icons/lu";
 import { toast } from "sonner";
 
 import { UserRole } from "@/generated/prisma/browser";
@@ -56,7 +57,7 @@ const JOB_SEEKER_NAV_ITEMS: NavItem[] = [
   {
     href: JOB_SEEKER_ROUTES.APPLICATIONS,
     label: "Applied",
-    icon: <FileText size={16} />,
+    icon: <LuFileCheck size={16} />,
   },
 ];
 
@@ -99,7 +100,7 @@ function NavbarWrapper({
 function NavbarLoading({ session }: { session: Session }) {
   return (
     <NavbarWrapper session={session}>
-      <div className="hidden md:flex items-center gap-2">
+      <div className="hidden md:flex items-center gap-3">
         {Array.from({ length: 3 }).map((_, i) => (
           <Skeleton key={i} className="h-8 w-20 rounded-full" />
         ))}
@@ -115,7 +116,7 @@ function NavbarWithoutAuth({ session }: { session: Session }) {
 
   return (
     <NavbarWrapper session={session}>
-      <div className="hidden md:flex items-center gap-2">
+      <div className="hidden md:flex items-center gap-3">
         <ThemeSwitch />
         <Button variant="brand" className="rounded-full">
           <CustomLink href="/sign-in" isActive={path === "/sign-in"}>
@@ -130,7 +131,7 @@ function NavbarWithoutAuth({ session }: { session: Session }) {
 function NavbarWithAuth({ session }: { session: UserSession }) {
   return (
     <NavbarWrapper session={session}>
-      <div className="hidden md:flex items-center gap-2">
+      <div className="hidden md:flex items-center gap-3">
         <ThemeSwitch />
         <ProfileDropdownMenu
           image={session.user.image}
@@ -146,8 +147,8 @@ function JobSeekerNavbar({ session }: { session: UserSession }) {
 
   return (
     <NavbarWrapper session={session}>
-      <div className="hidden md:flex items-center gap-2">
-        {JOB_SEEKER_NAV_ITEMS.map(({ href, label }) => {
+      <div className="hidden md:flex items-center gap-3">
+        {JOB_SEEKER_NAV_ITEMS.map(({ href, label, icon }) => {
           const isActive = path === href.split("?")[0];
 
           return (
@@ -163,7 +164,7 @@ function JobSeekerNavbar({ session }: { session: UserSession }) {
                 isActive={isActive}
                 className="font-semibold"
               >
-                {label}
+                {icon} {label}
               </CustomLink>
             </Button>
           );
@@ -184,7 +185,7 @@ function EmployerNavbar({ session }: { session: UserSession }) {
 
   return (
     <NavbarWrapper session={session}>
-      <div className="hidden md:flex items-center gap-2">
+      <div className="hidden md:flex items-center gap-3">
         {EMPLOYER_NAV_ITEMS.map(({ href, label, icon }) => {
           const isActive = path === href.split("?")[0];
 
