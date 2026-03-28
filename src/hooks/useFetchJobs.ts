@@ -8,8 +8,6 @@ import { JobListApiResponse } from "@/types/api";
 
 import { useClientSession } from "./useClientSession";
 
-const BASE_API = JOB_SEEKER_API_ROUTES.JOBS_API;
-
 function buildJobsUrl(filters?: Record<string, string | null>): string {
   const searchParams = new URLSearchParams();
   if (filters) {
@@ -17,7 +15,7 @@ function buildJobsUrl(filters?: Record<string, string | null>): string {
       if (value) searchParams.set(key, value);
     });
   }
-  return `${BASE_API}?${searchParams.toString()}`;
+  return `${JOB_SEEKER_API_ROUTES.JOBS_API}?${searchParams.toString()}`;
 }
 
 export async function fetchJobs(filters?: Record<string, string | null>) {
