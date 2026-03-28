@@ -16,7 +16,7 @@ import { fetchBookmarks } from "@/lib/job-seeker/fetch-bookmarks";
 import { Bookmarks } from "./bookmarks";
 
 export const metadata: Metadata = {
-  title: "Bookmarks Server Fetch - Careerly",
+  title: "Bookmarks - Careerly",
   description: "View and manage all your bookmarks.",
 };
 

@@ -17,7 +17,7 @@ import { Filter } from "@/types";
 import { Jobs } from "./jobs";
 
 export const metadata: Metadata = {
-  title: "Jobs Server Fetch - Careerly",
+  title: "Jobs - Careerly",
   description: "Easily browse job listings using filters and pagination.",
 };
 

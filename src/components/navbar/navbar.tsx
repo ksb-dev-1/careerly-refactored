@@ -50,12 +50,12 @@ const JOB_SEEKER_NAV_ITEMS: NavItem[] = [
   },
   {
     href: JOB_SEEKER_ROUTES.BOOKMARKS,
-    label: "Bookmarks",
+    label: "Saved",
     icon: <Bookmark size={16} />,
   },
   {
     href: JOB_SEEKER_ROUTES.APPLICATIONS,
-    label: "Applications",
+    label: "Applied",
     icon: <FileText size={16} />,
   },
 ];
@@ -146,7 +146,7 @@ function JobSeekerNavbar({ session }: { session: UserSession }) {
 
   return (
     <NavbarWrapper session={session}>
-      <div className="hidden md:flex items-center gap-0">
+      <div className="hidden md:flex items-center gap-2">
         {JOB_SEEKER_NAV_ITEMS.map(({ href, label }) => {
           const isActive = path === href.split("?")[0];
 

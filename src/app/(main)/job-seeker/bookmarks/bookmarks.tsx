@@ -104,10 +104,10 @@ function JobCard({ job }: { job: JobListItem }) {
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <CardTitle className="sm:text-lg font-bold">{role}</CardTitle>
+                  <CardTitle className="font-bold">{role}</CardTitle>
                   {appliedOn && <Badge>Applied</Badge>}
                 </div>
-                <CardDescription className="mt-2 flex items-center gap-2 text-brand font-bold">
+                <CardDescription className="mt-1 flex items-center gap-2 text-brand font-bold">
                   {companyName}
                 </CardDescription>
               </div>
@@ -154,7 +154,7 @@ function JobCard({ job }: { job: JobListItem }) {
               </Badge>
               <Badge variant="secondary">
                 <MapPin />
-                {location.split(",")[0]}
+                {location}
               </Badge>
             </div>
 

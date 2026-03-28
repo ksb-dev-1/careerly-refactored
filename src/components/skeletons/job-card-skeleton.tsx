@@ -1,6 +1,12 @@
 "use client";
 
-import { Card, CardContent, CardHeader } from "../ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "../ui/card";
 import { Skeleton } from "../ui/skeleton";
 
 export function JobCardSkeleton() {
@@ -12,19 +18,21 @@ export function JobCardSkeleton() {
             <Skeleton className="hidden sm:flex h-12 w-12 text rounded-lg" />
             <div>
               <Skeleton className="font-bold text-transparent w-40 sm:w-60">
-                Job Role
+                <CardTitle>Job Role</CardTitle>
               </Skeleton>
-              <Skeleton className="w-fit h-5 mt-2 text-transparent">
-                Company Name
+              <Skeleton className="w-fit mt-1">
+                <CardDescription className="text-transparent">
+                  Company Name
+                </CardDescription>
               </Skeleton>
             </div>
           </div>
         </CardHeader>
         <CardContent className="px-4! sm:px-6!">
-          <Skeleton className="w-[50%] h-[21.59px] mt-4 text-transparent">
+          <Skeleton className="w-[50%] h-5 mt-4 text-transparent">
             Metadata
           </Skeleton>
-          <Skeleton className="w-[40%] mt-4 h-5 text-transparent">
+          <Skeleton className="w-[40%] mt-6 h-5 text-transparent">
             Skills
           </Skeleton>
           <Skeleton className="w-fit mt-6 h-[15.99px] text-transparent text-xs">

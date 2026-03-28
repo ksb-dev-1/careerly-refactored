@@ -49,7 +49,7 @@ export function BookmarkButton({
       type="button"
       size="icon"
       className={cn(
-        "bg-primary/10 text-primary border border-primary/20 hover:bg-primary/20",
+        "bg-brand/10 text-brand border border-brand/20 hover:bg-brand/20",
         className,
       )}
       aria-label={isBookmarked ? "remove from bookmarks" : "add to bookmarks"}
@@ -57,7 +57,7 @@ export function BookmarkButton({
       onClick={handleToggle}
     >
       {isPending ? (
-        <Spinner color="text-primary" />
+        <Spinner color="text-brand" />
       ) : isBookmarked ? (
         <FaBookmark />
       ) : (
