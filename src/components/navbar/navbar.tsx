@@ -102,10 +102,10 @@ function NavbarLoading({ session }: { session: Session }) {
     <NavbarWrapper session={session}>
       <div className="hidden md:flex items-center gap-3">
         {Array.from({ length: 3 }).map((_, i) => (
-          <Skeleton key={i} className="h-8 w-20" />
+          <Skeleton key={i} className="h-8 w-16" />
         ))}
         <ThemeSwitch />
-        <Skeleton className="h-9 w-9" />
+        <Skeleton className="h-9 w-9 rounded-full" />
       </div>
     </NavbarWrapper>
   );

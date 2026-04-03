@@ -8,6 +8,7 @@ import { Filter } from "@/components/job-seeker/filter";
 import { JobCard } from "@/components/job-seeker/job-card";
 import { SearchInput } from "@/components/job-seeker/search-input";
 import { JobPagination } from "@/components/pagination";
+import { JobCardSkeleton } from "@/components/skeletons/job-card-skeleton";
 import { JobListSkeleton } from "@/components/skeletons/job-list-skeleton";
 import { useExtractJobFilters } from "@/hooks/useExtractFilters";
 import { useFetchJobs } from "@/hooks/useFetchJobs";

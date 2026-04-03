@@ -4,7 +4,7 @@ import { Metadata } from "next";
 
 import { JobListSkeleton } from "@/components/skeletons/job-list-skeleton";
 
-import { JobList } from "./jobs";
+import { JobList } from "./job-list";
 
 export const metadata: Metadata = {
   title: "Jobs - Careerly",

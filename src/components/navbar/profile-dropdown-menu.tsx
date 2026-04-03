@@ -85,7 +85,7 @@ export function ProfileDropdownMenu({ image, role }: ProfileDropdownProps) {
               className="border rounded-full object-cover"
             />
           ) : (
-            <AvatarFallback>
+            <AvatarFallback className="rounded-full">
               <User size={16} aria-hidden="true" />
             </AvatarFallback>
           )}

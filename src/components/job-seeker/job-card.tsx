@@ -126,15 +126,15 @@ export function JobCard({ job }: { job: JobListItem }) {
                 {experienceMin}-{experienceMax} years
               </span>
               <span className="flex items-center gap-2 text-sm">
+                {getCurrencyIcon(currency)} {formatMoney(salary, currency)}
+              </span>
+              <span className="flex items-center gap-2 text-sm">
                 <Timer size={16} />
                 {formatEnums(jobType)}
               </span>
               <span className="flex items-center gap-2 text-sm">
                 <Building size={16} />
                 {formatEnums(jobMode)}
-              </span>
-              <span className="flex items-center gap-2 text-sm">
-                {getCurrencyIcon(currency)} {formatMoney(salary, currency)}
               </span>
               <span className="flex items-center gap-2 text-sm">
                 <MapPin size={16} />
