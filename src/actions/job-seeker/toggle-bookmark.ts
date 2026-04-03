@@ -1,10 +1,7 @@
 "use server";
 
-import { updateTag } from "next/cache";
-
 import z from "zod";
 
-import { getServerSession } from "@/lib/get-server-session";
 import { prisma } from "@/lib/prisma";
 
 export type ToggleBookmarkActionSuccess = {
@@ -24,11 +21,9 @@ export type ToggleBookmarkActionResponse =
   | ToggleBookmarkActionError;
 
 export async function ToggleBookmark(
+  jobSeekerId: string,
   jobId: string,
 ): Promise<ToggleBookmarkActionResponse> {
-  const session = await getServerSession();
-  const jobSeekerId = session?.user.id;
-
   if (!jobSeekerId) {
     return {
       success: false,
@@ -61,10 +56,6 @@ export async function ToggleBookmark(
         },
       });
 
-      updateTag(`jobs-${jobSeekerId}`);
-      updateTag(`bookmarks-${jobSeekerId}`);
-      updateTag(`applications-${jobSeekerId}`);
-
       return {
         success: true,
         status: 200,
@@ -78,10 +69,6 @@ export async function ToggleBookmark(
         jobId,
       },
     });
-
-    updateTag(`jobs-${jobSeekerId}`);
-    updateTag(`bookmarks-${jobSeekerId}`);
-    updateTag(`applications-${jobSeekerId}`);
 
     return {
       success: true,

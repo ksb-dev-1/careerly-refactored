@@ -30,20 +30,20 @@ export function JobList() {
 
   return (
     <>
-      <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-6">
+      {/* <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-6">
         <h4 className="font-bold w-fit">All Jobs</h4>
         <div className="w-full sm:max-w-sm flex items-center gap-2">
           <SearchInput />
         </div>
-      </div>
+      </div> */}
 
-      {isFilterApplied && (
+      {/* {isFilterApplied && (
         <div className="mb-6">
           <ActiveFilters />
         </div>
-      )}
+      )} */}
 
-      <div className="w-full flex items-start gap-6">
+      <div className="max-w-6xl w-full mx-auto flex items-start gap-6">
         <Filter />
         <div className="w-full">
           <div className="w-full flex flex-col gap-6">

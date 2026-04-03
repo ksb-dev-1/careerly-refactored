@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 export default function JobsPage() {
   return (
-    <div className="min-h-screen max-w-custom mx-auto w-full mt-32 mb-16 px-4">
+    <div className="min-h-screen w-full mt-32 mb-16 px-4">
       <Suspense fallback={<JobListSkeleton />}>
         <JobList />
       </Suspense>

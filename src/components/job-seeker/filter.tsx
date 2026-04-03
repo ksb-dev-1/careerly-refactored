@@ -11,7 +11,7 @@ import {
 
 export function Filter() {
   return (
-    <Card className="hidden md:flex max-w-70 w-full sticky top-24">
+    <Card className="hidden md:flex max-w-80 w-full sticky top-24 shadow-sm">
       <CardHeader className="border-b">
         <CardTitle>
           <p className="flex items-center gap-2">
@@ -23,7 +23,7 @@ export function Filter() {
       <CardContent>Options</CardContent>
 
       <CardFooter className="border-t">
-        <Button variant="brand" className="w-full">
+        <Button variant="brand" size="lg" className="w-full">
           Apply Filters
         </Button>
       </CardFooter>

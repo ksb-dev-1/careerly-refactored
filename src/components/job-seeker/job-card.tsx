@@ -6,7 +6,6 @@ import {
   BriefcaseBusiness,
   Building,
   Building2,
-  Calendar,
   Layers,
   MapPin,
   Timer,
@@ -19,6 +18,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -66,6 +66,8 @@ export function formatMoney(
 }
 
 export function formatEnums(value: JobType | JobMode): string {
+  if (!value) return "";
+
   return value
     .toLowerCase()
     .split("_")
@@ -99,10 +101,10 @@ export function JobCard({ job }: { job: JobListItem }) {
   return (
     <div className="relative">
       <CustomLink href={`/job-seeker/jobs/${id}`}>
-        <Card className="py-4! sm:py-6! gap-0!">
-          <CardHeader className="px-4! sm:px-6!">
+        <Card className="hover:outline hover:outline-brand">
+          <CardHeader className="border-b">
             <div className="flex items-start gap-4">
-              <div className="hidden sm:flex items-center justify-center h-12 w-12 bg-muted rounded-lg">
+              <div className="hidden sm:flex items-center justify-center h-12 w-12 bg-muted rounded-lg border">
                 <Building2 size={20} />
               </div>
               <div>
@@ -117,14 +119,34 @@ export function JobCard({ job }: { job: JobListItem }) {
             </div>
           </CardHeader>
 
-          <CardContent className="px-4! sm:px-6!">
-            <div className="mt-4 flex items-center flex-wrap gap-3 text-gray-600 dark:text-muted-foreground">
-              <Layers size={16} />
+          <CardContent>
+            <div className="max-w-xl grid grid-cols-2 sm:grid-cols-3 gap-4 text-gray-700 dark:text-muted-foreground">
+              <span className="flex items-center gap-2 text-sm">
+                <BriefcaseBusiness size={16} />
+                {experienceMin}-{experienceMax} years
+              </span>
+              <span className="flex items-center gap-2 text-sm">
+                <Timer size={16} />
+                {formatEnums(jobType)}
+              </span>
+              <span className="flex items-center gap-2 text-sm">
+                <Building size={16} />
+                {formatEnums(jobMode)}
+              </span>
+              <span className="flex items-center gap-2 text-sm">
+                {getCurrencyIcon(currency)} {formatMoney(salary, currency)}
+              </span>
+              <span className="flex items-center gap-2 text-sm">
+                <MapPin size={16} />
+                {location}
+              </span>
+            </div>
+
+            <div className="mt-6 flex items-center flex-wrap gap-3 text-gray-600 dark:text-muted-foreground">
+              <Layers size={12} />
               {skills.slice(0, 3).map((js, index) => (
                 <span key={js.skillId} className="flex items-center gap-2">
-                  <span className="capitalize text-sm font-medium">
-                    {js.skill.name}
-                  </span>
+                  <span className="text-xs">{js.skill.name}</span>
 
                   {index < Math.min(skills.length, 3) - 1 && (
                     <span className="h-1 w-1 rounded-full bg-gray-600 dark:bg-muted-foreground"></span>
@@ -138,45 +160,28 @@ export function JobCard({ job }: { job: JobListItem }) {
                 </span>
               )}
             </div>
-
-            <div className="mt-6 flex items-center flex-wrap gap-2 sm:gap-3 text-gray-700 dark:text-muted-foreground">
-              <Badge variant="secondary">
-                <BriefcaseBusiness />
-                {experienceMin}-{experienceMax} years
-              </Badge>
-              <Badge variant="secondary">
-                <Timer />
-                {formatEnums(jobType)}
-              </Badge>
-              <Badge variant="secondary">
-                <Building />
-                {formatEnums(jobMode)}
-              </Badge>
-              <Badge variant="secondary">
-                {getCurrencyIcon(currency)} {formatMoney(salary, currency)}
-              </Badge>
-              <Badge variant="secondary">
-                <MapPin />
-                {location}
-              </Badge>
-            </div>
-
-            <span className="mt-6 text-muted-foreground flex items-center gap-1 text-xs">
-              <Calendar size={12} /> {relativeDate(createdAt)}
-            </span>
           </CardContent>
+
+          <CardFooter>
+            <div className="w-full flex items-center justify-between">
+              <span className="text-muted-foreground text-xs">
+                {relativeDate(createdAt)}
+              </span>
+
+              {isFeatured && (
+                <span className="px-2 py-1 flex items-center gap-1 text-xs rounded-full bg-brand text-white dark:text-background">
+                  <FaStar className="h-3 w-3" />
+                  <span className="">Featured</span>
+                </span>
+              )}
+            </div>
+          </CardFooter>
         </Card>
       </CustomLink>
-      {isFeatured && (
-        <span className="absolute top-0 right-0 px-2 py-1 flex items-center gap-1 text-xs rounded-tr-xl rounded-bl-xl bg-brand text-white dark:text-background">
-          <FaStar className="h-3 w-3" />
-          <span className="">Featured</span>
-        </span>
-      )}
       <BookmarkButton
         jobId={id}
         isBookmarked={isBookmarked}
-        className="absolute right-4 sm:right-6 bottom-4 sm:bottom-6"
+        className="absolute top-4 right-4"
       />
     </div>
   );

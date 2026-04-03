@@ -80,7 +80,7 @@ function NavbarWrapper({
 
   return (
     <header className="fixed z-20 top-0 left-0 right-0 w-full border-b h-16 flex items-center justify-center bg-background">
-      <nav className="flex items-center justify-between max-w-custom w-full px-4">
+      <nav className="flex items-center justify-between max-w-7xl w-full px-4">
         <CustomLink
           href="/"
           className="font-extrabold text-xl text-brand hover:text-brand-hover transition-colors flex items-center gap-1"
@@ -102,10 +102,10 @@ function NavbarLoading({ session }: { session: Session }) {
     <NavbarWrapper session={session}>
       <div className="hidden md:flex items-center gap-3">
         {Array.from({ length: 3 }).map((_, i) => (
-          <Skeleton key={i} className="h-8 w-20 rounded-full" />
+          <Skeleton key={i} className="h-8 w-20" />
         ))}
         <ThemeSwitch />
-        <Skeleton className="h-9 w-9 rounded-full" />
+        <Skeleton className="h-9 w-9" />
       </div>
     </NavbarWrapper>
   );
@@ -118,7 +118,7 @@ function NavbarWithoutAuth({ session }: { session: Session }) {
     <NavbarWrapper session={session}>
       <div className="hidden md:flex items-center gap-3">
         <ThemeSwitch />
-        <Button variant="brand" className="rounded-full">
+        <Button variant="brand">
           <CustomLink href="/sign-in" isActive={path === "/sign-in"}>
             Sign in
           </CustomLink>
@@ -156,7 +156,7 @@ function JobSeekerNavbar({ session }: { session: UserSession }) {
               key={href}
               asChild
               variant="ghost"
-              className={`${isActive ? "text-brand hover:text-brand" : ""} rounded-full`}
+              className={`${isActive ? "text-brand hover:text-brand" : ""}`}
             >
               <CustomLink
                 href={href}
@@ -164,7 +164,7 @@ function JobSeekerNavbar({ session }: { session: UserSession }) {
                 isActive={isActive}
                 className="font-semibold"
               >
-                {icon} {label}
+                {label}
               </CustomLink>
             </Button>
           );
@@ -194,7 +194,7 @@ function EmployerNavbar({ session }: { session: UserSession }) {
               key={href}
               asChild
               variant="ghost"
-              className={`${isActive ? "text-brand hover:text-brand" : ""} rounded-full`}
+              className={`${isActive ? "text-brand hover:text-brand" : ""}`}
             >
               <CustomLink href={href} prefetch={false} isActive={isActive}>
                 {label}

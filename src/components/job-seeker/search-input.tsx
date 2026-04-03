@@ -42,7 +42,7 @@ export function SearchInput() {
       />
       <Button
         onClick={handleSearch}
-        className="bg-brand text-white dark:text-background hover:bg-brand-hover absolute top-0 right-0 h-9 px-3 flex items-center justify-center rounded-none rounded-tr-md rounded-br-md"
+        className="bg-brand text-white dark:text-background hover:bg-brand-hover absolute top-0 right-0 h-[34.6px] px-3 flex items-center justify-center rounded-none rounded-tr-md rounded-br-md"
       >
         <Search size={18} />
       </Button>
