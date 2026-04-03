@@ -7,7 +7,7 @@ export function HeroSection() {
       <h1 className="font-extrabold text-4xl sm:text-5xl tracking-tight text-center">
         Unlock Your <span className="text-brand">Career</span> Potential
       </h1>
-      <p className="mt-6 md:mt-8 max-w-3xl text-center text-base md:text-lg text-slate-600 dark:text-slate-300">
+      <p className="mt-6 md:mt-8 max-w-3xl text-center md:text-lg text-gray-700 dark:text-muted-foreground">
         Find the perfect job or the right talent effortlessly, with intelligent
         filtering, instant search results, and a modern, intuitive interface
         designed for your success.

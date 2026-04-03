@@ -120,7 +120,7 @@ export function JobCard({ job }: { job: JobListItem }) {
           </CardHeader>
 
           <CardContent>
-            <div className="max-w-xl grid grid-cols-2 sm:grid-cols-3 gap-4 text-gray-700 dark:text-muted-foreground">
+            <div className="max-w-xl grid grid-cols-2 sm:grid-cols-3 gap-4 text-gray-700 dark:text-gray-300">
               <span className="flex items-center gap-2 text-sm">
                 <BriefcaseBusiness size={16} />
                 {experienceMin}-{experienceMax} years
@@ -142,11 +142,16 @@ export function JobCard({ job }: { job: JobListItem }) {
               </span>
             </div>
 
-            <div className="mt-6 flex items-center flex-wrap gap-3 text-gray-600 dark:text-muted-foreground">
-              <Layers size={12} />
+            <div className="mt-6 flex items-center flex-wrap gap-3">
+              <Layers
+                size={16}
+                className="text-gray-600 dark:text-muted-foreground"
+              />
               {skills.slice(0, 3).map((js, index) => (
                 <span key={js.skillId} className="flex items-center gap-2">
-                  <span className="text-xs">{js.skill.name}</span>
+                  <span className="text-sm text-muted-foreground">
+                    {js.skill.name}
+                  </span>
 
                   {index < Math.min(skills.length, 3) - 1 && (
                     <span className="h-1 w-1 rounded-full bg-gray-600 dark:bg-muted-foreground"></span>
@@ -154,9 +159,9 @@ export function JobCard({ job }: { job: JobListItem }) {
                 </span>
               ))}
 
-              {skills.length > 3 && (
-                <span className="text-sm font-medium">
-                  +{skills.length - 3}
+              {skills.length > 4 && (
+                <span className="text-xs font-medium text-gray-600 dark:text-muted-foreground">
+                  +{skills.length - 4}
                 </span>
               )}
             </div>
@@ -164,9 +169,7 @@ export function JobCard({ job }: { job: JobListItem }) {
 
           <CardFooter>
             <div className="w-full flex items-center justify-between">
-              <span className="text-muted-foreground text-xs">
-                {relativeDate(createdAt)}
-              </span>
+              <span className="text-xs">{relativeDate(createdAt)}</span>
 
               {isFeatured && (
                 <span className="px-2 py-1 flex items-center gap-1 text-xs rounded-full bg-brand text-white dark:text-background">

@@ -95,16 +95,16 @@ interface ReusableCardProps {
 
 function ReusableCard({ icon, title, description, steps }: ReusableCardProps) {
   return (
-    <Card className="shadow-sm">
+    <Card className="shadow-sm h-full">
       <CardHeader className="flex items-start gap-4">
         <div className="relative bg-brand/10 text-brand h-12 w-12 rounded-lg flex items-center justify-center">
           {icon}
         </div>
         <div>
-          <CardTitle className="text-lg font-bold text-brand">
+          <CardTitle className="font-bold text-brand text-lg">
             {title}
           </CardTitle>
-          <CardDescription className="mt-1 text-slate-600 dark:text-muted-foreground">
+          <CardDescription className="mt-1 text-gray-700 dark:text-muted-foreground">
             {description}
           </CardDescription>
         </div>
@@ -119,8 +119,8 @@ function ReusableCard({ icon, title, description, steps }: ReusableCardProps) {
               <span className="text-sm font-bold">{step.number}</span>
             </div>
             <div>
-              <p className="font-bold mb-1">{step.title}</p>
-              <p className="text-slate-600 dark:text-muted-foreground">
+              <p className="text-base font-bold mb-1">{step.title}</p>
+              <p className="text-base text-slate-600 dark:text-muted-foreground">
                 {step.description}
               </p>
             </div>

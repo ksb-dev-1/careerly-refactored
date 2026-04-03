@@ -96,7 +96,7 @@ function Header() {
         </span>
       </h2>
 
-      <p className="text-base sm:text-lg text-slate-600 dark:text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+      <p className="text-base sm:text-lg text-gray-700 dark:text-muted-foreground max-w-2xl mx-auto leading-relaxed">
         Features designed to make hiring and job searching simple and effective.
       </p>
     </div>
@@ -185,7 +185,7 @@ function FeaturesSection({
             </div>
 
             <div className="mt-2">
-              <p className="leading-relaxed text-slate-600 dark:text-muted-foreground">
+              <p className="leading-relaxed text-gray-700 dark:text-muted-foreground">
                 {feature.desc}
               </p>
             </div>

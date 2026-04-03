@@ -65,7 +65,7 @@ function Header() {
         </span>
       </h2>
 
-      <p className="text-base sm:text-lg text-slate-600 dark:text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+      <p className="text-base sm:text-lg text-gray-700 dark:text-muted-foreground max-w-2xl mx-auto leading-relaxed">
         Find answers to common questions about using our platform for job
         searching and hiring.
       </p>
@@ -85,7 +85,7 @@ export function FAQItem({
   return (
     <div className="border-b">
       <button
-        className="w-full text-left py-4 font-medium flex items-center justify-between hover:underline"
+        className="w-full font-semibold text-left py-4 flex items-center justify-between hover:underline"
         aria-expanded={isOpen}
         onClick={() => onToggle(faq.id)}
       >
@@ -96,13 +96,13 @@ export function FAQItem({
         >
           {isOpen ? (
             <Minus
-              size={20}
-              className="text-gray-500 dark:text-muted-foreground"
+              size={16}
+              className="text-gray-700 dark:text-muted-foreground"
             />
           ) : (
             <Plus
-              size={20}
-              className="text-gray-500 dark:text-muted-foreground"
+              size={16}
+              className="text-gray-700 dark:text-muted-foreground"
             />
           )}
         </motion.div>
@@ -118,7 +118,7 @@ export function FAQItem({
             transition={{ duration: 0.25, ease: "easeInOut" }}
             className="overflow-hidden"
           >
-            <p className="pb-4 text-gray-600 dark:text-muted-foreground">
+            <p className="pb-4 text-gray-700 dark:text-muted-foreground">
               {faq.answer}
             </p>
           </motion.div>
