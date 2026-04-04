@@ -5,7 +5,7 @@ import { ServerError } from "@/components/errors/server-error";
 import { Unauthenticated } from "@/components/errors/unauthenticated";
 import { JobCard } from "@/components/job-seeker/job-card";
 import { JobListSkeleton } from "@/components/skeletons/job-list-skeleton";
-import { useFetchBookmarks } from "@/hooks/useFetchBookmarks";
+import { useFetchBookmarks } from "@/hooks/job-seeker/useFetchBookmarks";
 
 export function Bookmarks() {
   const { data, isLoading, error } = useFetchBookmarks();

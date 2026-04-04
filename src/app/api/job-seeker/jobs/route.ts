@@ -199,7 +199,10 @@ export async function GET(
       { status: 200 },
     );
   } catch (error) {
-    console.error("GET /api/jobs error:", { userId: session.user.id, error });
+    console.error("GET /api/job-seeker/jobs error:", {
+      userId: session.user.id,
+      error,
+    });
 
     return NextResponse.json(
       {

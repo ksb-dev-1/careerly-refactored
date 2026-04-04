@@ -4,7 +4,7 @@ import { queryKeys } from "@/lib/query-keys";
 import { JOB_SEEKER_API_ROUTES } from "@/lib/routes";
 import { BookmarksApiResponse } from "@/types/api";
 
-import { useClientSession } from "./useClientSession";
+import { useClientSession } from "../useClientSession";
 
 export async function fetchBookmarks() {
   const res = await fetch(JOB_SEEKER_API_ROUTES.BOOKMARKS_API);

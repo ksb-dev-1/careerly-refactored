@@ -1,7 +1,9 @@
 import z from "zod";
 
+// Email schema
 export const emailSchema = z.email({ message: "Please enter a valid email" });
 
+// Password schema
 export const passwordSchema = z
   .string()
   .min(1, { message: "Password is required" })
@@ -10,10 +12,12 @@ export const passwordSchema = z
     message: "Password must contain at least one special character",
   });
 
+// Confirm password schema
 export const confirmPasswordSchema = z
   .string()
   .min(1, { message: "Please confirm password" });
 
+// Sign-up schema
 export const signUpSchema = z
   .object({
     name: z.string().min(1, { message: "Name is required" }),
@@ -26,25 +30,66 @@ export const signUpSchema = z
     path: ["passwordConfirmation"],
   });
 
-export type SignUpValues = z.infer<typeof signUpSchema>;
+export type SignUp = z.infer<typeof signUpSchema>;
 
+// Sign-in schema
 export const signInSchema = z.object({
   email: emailSchema,
   password: passwordSchema,
   rememberMe: z.boolean().optional(),
 });
 
-export type SignInValues = z.infer<typeof signInSchema>;
+export type SignIn = z.infer<typeof signInSchema>;
 
+// Forgot password schema
 export const forgotPasswordSchema = z.object({
   email: emailSchema,
 });
 
-export type ForgotPasswordValues = z.infer<typeof forgotPasswordSchema>;
+export type ForgotPassword = z.infer<typeof forgotPasswordSchema>;
 
+// Reset password schema
 export const resetPasswordSchema = z.object({
   newPassword: passwordSchema,
   passwordConfirmation: confirmPasswordSchema,
 });
 
-export type ResetPasswordValues = z.infer<typeof resetPasswordSchema>;
+export type ResetPassword = z.infer<typeof resetPasswordSchema>;
+
+// Url schema
+export const urlSchema = z.string().refine(
+  (val) => {
+    try {
+      new URL(val);
+      return true;
+    } catch {
+      return false;
+    }
+  },
+  { message: "Invalid URL" },
+);
+
+export type Url = z.infer<typeof urlSchema>;
+
+// Project schema
+export const projectSchema = z.object({
+  name: z.string().min(1, "Project name is required"),
+  link: urlSchema,
+});
+
+export type Project = z.infer<typeof projectSchema>;
+
+// Social link schema
+export const socialLinkSchema = z.object({
+  platform: z.enum([
+    "github",
+    "linkedin",
+    "twitter",
+    "portfolio",
+    "leetcode",
+    "hackerrank",
+  ]),
+  url: urlSchema,
+});
+
+export type SocialLink = z.infer<typeof socialLinkSchema>;

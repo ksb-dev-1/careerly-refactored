@@ -6,7 +6,7 @@ import { queryKeys } from "@/lib/query-keys";
 import { JOB_SEEKER_API_ROUTES } from "@/lib/routes";
 import { JobListApiResponse } from "@/types/api";
 
-import { useClientSession } from "./useClientSession";
+import { useClientSession } from "../useClientSession";
 
 function buildJobsUrl(filters?: Record<string, string | null>): string {
   const searchParams = new URLSearchParams();

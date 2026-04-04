@@ -16,6 +16,7 @@ export async function GET(): Promise<NextResponse<BookmarksApiResponse>> {
       { status: 401 },
     );
   }
+
   try {
     const bookmarks = await prisma.bookmark.findMany({
       where: {
@@ -76,7 +77,7 @@ export async function GET(): Promise<NextResponse<BookmarksApiResponse>> {
       { status: 200 },
     );
   } catch (error) {
-    console.error("GET /api/bookmarks error:", {
+    console.error("GET /api/job-seeker/bookmarks error:", {
       userId: session.user.id,
       error,
     });

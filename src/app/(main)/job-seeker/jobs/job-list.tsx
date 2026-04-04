@@ -9,8 +9,8 @@ import { JobCard } from "@/components/job-seeker/job-card";
 import { SearchInput } from "@/components/job-seeker/search-input";
 import { JobPagination } from "@/components/pagination";
 import JobsPageSkeleton from "@/components/skeletons/jobs-page-skeleton";
+import { useFetchJobs } from "@/hooks/job-seeker/useFetchJobs";
 import { useExtractJobFilters } from "@/hooks/useExtractFilters";
-import { useFetchJobs } from "@/hooks/useFetchJobs";
 
 export function JobList() {
   const { data, isLoading, error } = useFetchJobs();
