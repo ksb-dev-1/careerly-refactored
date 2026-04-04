@@ -1,7 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
 import { useSearchParams } from "next/navigation";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -27,11 +25,9 @@ interface BookmarkButtonProps {
 
 export function BookmarkButton({
   jobId,
-  isBookmarked = false, // ✅ prevent undefined
+  isBookmarked = false,
   className,
 }: BookmarkButtonProps) {
-  const [bookmarked, setBookmarked] = useState<boolean>(isBookmarked);
-
   const { data: session, isPending } = useClientSession();
   const jobSeekerId = session?.user.id;
 
@@ -47,9 +43,8 @@ export function BookmarkButton({
     search: searchParams.get("search"),
   };
 
-  useEffect(() => {
-    setBookmarked(isBookmarked);
-  }, [isBookmarked]);
+  // ✅ SINGLE SOURCE OF TRUTH
+  const bookmarked = isBookmarked;
 
   const { mutate } = useMutation({
     mutationFn: async () => {
@@ -62,44 +57,36 @@ export function BookmarkButton({
       if (!jobSeekerId) return;
 
       await queryClient.cancelQueries({
-        queryKey: queryKeys.jobs(filters, jobSeekerId),
+        queryKey: ["jobs"],
       });
 
       await queryClient.cancelQueries({
         queryKey: queryKeys.bookmarks(jobSeekerId),
       });
 
-      const previousJobs = queryClient.getQueryData(
-        queryKeys.jobs(filters, jobSeekerId),
-      );
+      const previousJobs = queryClient.getQueriesData({
+        queryKey: ["jobs"],
+      });
 
       const previousBookmarks = queryClient.getQueryData(
         queryKeys.bookmarks(jobSeekerId),
       );
 
-      const previousBookmarked = bookmarked;
+      // ✅ update ALL jobs caches (important fix)
+      queryClient.setQueriesData({ queryKey: ["jobs"] }, (old: any) => {
+        if (!old) return old;
 
-      // ✅ instant UI
-      setBookmarked((prev) => !prev);
+        return {
+          ...old,
+          jobs: old.jobs?.map((job: any) =>
+            job.id === jobId
+              ? { ...job, isBookmarked: !job.isBookmarked }
+              : job,
+          ),
+        };
+      });
 
-      // ✅ update jobs cache safely (handle paginated shape)
-      queryClient.setQueryData(
-        queryKeys.jobs(filters, jobSeekerId),
-        (old: any) => {
-          if (!old) return old;
-
-          return {
-            ...old,
-            jobs: old.jobs?.map((job: any) =>
-              job.id === jobId
-                ? { ...job, isBookmarked: !job.isBookmarked }
-                : job,
-            ),
-          };
-        },
-      );
-
-      // ✅ update bookmarks cache WITHOUT inserting partial data
+      // ✅ update bookmarks cache
       queryClient.setQueryData(queryKeys.bookmarks(jobSeekerId), (old: any) => {
         if (!old) return old;
 
@@ -112,33 +99,26 @@ export function BookmarkButton({
           };
         }
 
-        // ❗ DO NOT insert incomplete job → let refetch handle it
         return old;
       });
 
-      return { previousJobs, previousBookmarks, previousBookmarked };
+      return { previousJobs, previousBookmarks };
     },
 
-    // 🔴 rollback on error
+    // 🔴 rollback
     onError: (error: ToggleBookmarkActionError, _, context) => {
       if (!jobSeekerId) return;
 
-      if (context?.previousJobs) {
-        queryClient.setQueryData(
-          queryKeys.jobs(filters, jobSeekerId),
-          context.previousJobs,
-        );
-      }
+      // restore ALL jobs queries
+      context?.previousJobs?.forEach(([queryKey, data]) => {
+        queryClient.setQueryData(queryKey, data);
+      });
 
       if (context?.previousBookmarks) {
         queryClient.setQueryData(
           queryKeys.bookmarks(jobSeekerId),
           context.previousBookmarks,
         );
-      }
-
-      if (context?.previousBookmarked !== undefined) {
-        setBookmarked(context.previousBookmarked);
       }
 
       toast.error(error.message);
@@ -152,12 +132,12 @@ export function BookmarkButton({
       }
     },
 
-    // ✅ final sync
+    // ✅ FINAL SYNC (CRITICAL FIX)
     onSettled: () => {
       if (!jobSeekerId) return;
 
       queryClient.invalidateQueries({
-        queryKey: queryKeys.jobs(filters, jobSeekerId),
+        queryKey: ["jobs"], // 🔥 invalidate ALL variations
       });
 
       queryClient.invalidateQueries({
@@ -174,7 +154,7 @@ export function BookmarkButton({
       size="icon"
       className={cn("bg-brand/10 text-brand hover:bg-brand/20", className)}
       aria-label={bookmarked ? "remove from bookmarks" : "add to bookmarks"}
-      disabled={loading || !jobSeekerId} // ✅ prevent invalid clicks
+      disabled={loading || !jobSeekerId}
       onClick={() => mutate()}
     >
       {loading ? (

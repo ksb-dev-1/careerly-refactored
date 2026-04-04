@@ -34,7 +34,7 @@ export function useFetchJobs() {
 
   const filters = {
     page: searchParams.get("page") ?? "1",
-    limit: searchParams.get("limit") ?? "8",
+    limit: searchParams.get("limit") ?? "6",
     jobType: searchParams.get("jobType"),
     jobMode: searchParams.get("jobMode"),
     experience: searchParams.get("experience"),
