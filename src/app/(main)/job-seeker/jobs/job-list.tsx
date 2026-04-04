@@ -8,8 +8,7 @@ import { Filter } from "@/components/job-seeker/filter";
 import { JobCard } from "@/components/job-seeker/job-card";
 import { SearchInput } from "@/components/job-seeker/search-input";
 import { JobPagination } from "@/components/pagination";
-import { JobCardSkeleton } from "@/components/skeletons/job-card-skeleton";
-import { JobListSkeleton } from "@/components/skeletons/job-list-skeleton";
+import JobsPageSkeleton from "@/components/skeletons/jobs-page-skeleton";
 import { useExtractJobFilters } from "@/hooks/useExtractFilters";
 import { useFetchJobs } from "@/hooks/useFetchJobs";
 
@@ -17,7 +16,7 @@ export function JobList() {
   const { data, isLoading, error } = useFetchJobs();
   const { isFilterApplied } = useExtractJobFilters();
 
-  if (isLoading) return <JobListSkeleton />;
+  if (isLoading) return <JobsPageSkeleton />;
 
   if (error) {
     if (error.status === 401) return <Unauthenticated />;

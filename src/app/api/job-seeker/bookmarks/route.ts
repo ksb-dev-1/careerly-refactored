@@ -5,8 +5,6 @@ import { prisma } from "@/lib/prisma";
 import { BookmarksApiResponse, JobListItem } from "@/types/api";
 
 export async function GET(): Promise<NextResponse<BookmarksApiResponse>> {
-  console.log("Fetching Bookmarks in API");
-
   const session = await getServerSession();
 
   if (!session?.user?.id) {
