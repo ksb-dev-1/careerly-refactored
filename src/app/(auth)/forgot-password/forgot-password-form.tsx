@@ -21,13 +21,13 @@ import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth-client";
 import { ROUTES } from "@/lib/routes";
-import { ForgotPasswordValues, forgotPasswordSchema } from "@/lib/validation";
+import { ForgotPasswordType, forgotPasswordSchema } from "@/lib/validation";
 
 export function ForgotPasswordForm() {
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const form = useForm<ForgotPasswordValues>({
+  const form = useForm<ForgotPasswordType>({
     resolver: zodResolver(forgotPasswordSchema),
     defaultValues: {
       email: "",
@@ -38,7 +38,7 @@ export function ForgotPasswordForm() {
     form.reset(form.formState.defaultValues);
   }, [form]);
 
-  async function onSubmit({ email }: ForgotPasswordValues) {
+  async function onSubmit({ email }: ForgotPasswordType) {
     setSuccessMessage(null);
     setErrorMessage(null);
 

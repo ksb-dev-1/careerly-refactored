@@ -30,7 +30,7 @@ export const signUpSchema = z
     path: ["passwordConfirmation"],
   });
 
-export type SignUp = z.infer<typeof signUpSchema>;
+export type SignUpType = z.infer<typeof signUpSchema>;
 
 // Sign-in schema
 export const signInSchema = z.object({
@@ -39,14 +39,14 @@ export const signInSchema = z.object({
   rememberMe: z.boolean().optional(),
 });
 
-export type SignIn = z.infer<typeof signInSchema>;
+export type SignInType = z.infer<typeof signInSchema>;
 
 // Forgot password schema
 export const forgotPasswordSchema = z.object({
   email: emailSchema,
 });
 
-export type ForgotPassword = z.infer<typeof forgotPasswordSchema>;
+export type ForgotPasswordType = z.infer<typeof forgotPasswordSchema>;
 
 // Reset password schema
 export const resetPasswordSchema = z.object({
@@ -54,7 +54,7 @@ export const resetPasswordSchema = z.object({
   passwordConfirmation: confirmPasswordSchema,
 });
 
-export type ResetPassword = z.infer<typeof resetPasswordSchema>;
+export type ResetPasswordType = z.infer<typeof resetPasswordSchema>;
 
 // Url schema
 export const urlSchema = z.string().refine(
@@ -69,7 +69,7 @@ export const urlSchema = z.string().refine(
   { message: "Invalid URL" },
 );
 
-export type Url = z.infer<typeof urlSchema>;
+export type UrlType = z.infer<typeof urlSchema>;
 
 // Project schema
 export const projectSchema = z.object({
@@ -77,7 +77,7 @@ export const projectSchema = z.object({
   link: urlSchema,
 });
 
-export type Project = z.infer<typeof projectSchema>;
+export type ProjectType = z.infer<typeof projectSchema>;
 
 // Social link schema
 export const socialLinkSchema = z.object({
@@ -92,4 +92,4 @@ export const socialLinkSchema = z.object({
   url: urlSchema,
 });
 
-export type SocialLink = z.infer<typeof socialLinkSchema>;
+export type SocialLinkType = z.infer<typeof socialLinkSchema>;

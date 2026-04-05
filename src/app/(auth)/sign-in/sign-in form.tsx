@@ -34,7 +34,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth-client";
 import { ROUTES } from "@/lib/routes";
-import { SignInValues, signInSchema } from "@/lib/validation";
+import { SignInType, signInSchema } from "@/lib/validation";
 
 export function SignInForm() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -43,7 +43,7 @@ export function SignInForm() {
   >(null);
   const router = useRouter();
 
-  const form = useForm<SignInValues>({
+  const form = useForm<SignInType>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
       email: "",
@@ -56,7 +56,7 @@ export function SignInForm() {
     form.reset(form.formState.defaultValues);
   }, [form]);
 
-  async function onSubmit({ email, password, rememberMe }: SignInValues) {
+  async function onSubmit({ email, password, rememberMe }: SignInType) {
     setErrorMessage(null);
 
     const { error } = await authClient.signIn.email({

@@ -30,7 +30,7 @@ import {
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { useFetchJobSeekerProfile } from "@/hooks/job-seeker/useFetchJobSeekerProfile";
-import { Project, SocialLink } from "@/lib/validation";
+import { ProjectType, SocialLinkType } from "@/lib/validation";
 
 export function JobSeekerProfileDetails() {
   const { data, isLoading, error } = useFetchJobSeekerProfile();

@@ -29,13 +29,13 @@ import {
 import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth-client";
 import { ROUTES } from "@/lib/routes";
-import { SignUpValues, signUpSchema } from "@/lib/validation";
+import { SignUpType, signUpSchema } from "@/lib/validation";
 
 export function SignUpForm() {
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
-  const form = useForm<SignUpValues>({
+  const form = useForm<SignUpType>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
       name: "",
@@ -49,7 +49,7 @@ export function SignUpForm() {
     form.reset(form.formState.defaultValues);
   }, [form]);
 
-  async function onSubmit({ email, password, name }: SignUpValues) {
+  async function onSubmit({ email, password, name }: SignUpType) {
     setError(null);
 
     const { error } = await authClient.signUp.email({

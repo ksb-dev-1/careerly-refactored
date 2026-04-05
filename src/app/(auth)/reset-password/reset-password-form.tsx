@@ -20,14 +20,14 @@ import {
 import { FieldGroup } from "@/components/ui/field";
 import { authClient } from "@/lib/auth-client";
 import { ROUTES } from "@/lib/routes";
-import { ResetPasswordValues, resetPasswordSchema } from "@/lib/validation";
+import { ResetPasswordType, resetPasswordSchema } from "@/lib/validation";
 
 export function ResetPasswordForm({ token }: { token: string }) {
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const router = useRouter();
 
-  const form = useForm<ResetPasswordValues>({
+  const form = useForm<ResetPasswordType>({
     resolver: zodResolver(resetPasswordSchema),
     defaultValues: {
       newPassword: "",
@@ -39,7 +39,7 @@ export function ResetPasswordForm({ token }: { token: string }) {
     form.reset(form.formState.defaultValues);
   }, [form]);
 
-  async function onSubmit({ newPassword }: ResetPasswordValues) {
+  async function onSubmit({ newPassword }: ResetPasswordType) {
     setSuccessMessage(null);
     setErrorMessage(null);
 
