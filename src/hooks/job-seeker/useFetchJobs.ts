@@ -2,11 +2,23 @@ import { useSearchParams } from "next/navigation";
 
 import { useQuery } from "@tanstack/react-query";
 
+import {
+  JobListApiResponse,
+  JobListApiSuccessResponse,
+} from "@/app/api/job-seeker/jobs/route";
 import { queryKeys } from "@/lib/query-keys";
 import { JOB_SEEKER_API_ROUTES } from "@/lib/routes";
-import { JobListApiResponse } from "@/types/api";
 
 import { useClientSession } from "../useClientSession";
+
+export class ApiError extends Error {
+  constructor(
+    public status: number,
+    message: string,
+  ) {
+    super(message);
+  }
+}
 
 function buildJobsUrl(filters?: Record<string, string | null>): string {
   const searchParams = new URLSearchParams();
@@ -18,12 +30,14 @@ function buildJobsUrl(filters?: Record<string, string | null>): string {
   return `${JOB_SEEKER_API_ROUTES.JOBS_API}?${searchParams.toString()}`;
 }
 
-export async function fetchJobs(filters?: Record<string, string | null>) {
+export async function fetchJobs(
+  filters?: Record<string, string | null>,
+): Promise<JobListApiSuccessResponse> {
   const res = await fetch(buildJobsUrl(filters));
   const body: JobListApiResponse = await res.json();
 
   if (!body.success) {
-    throw { status: res.status, message: body.error };
+    throw new ApiError(res.status, body.error);
   }
   return body;
 }
@@ -41,7 +55,7 @@ export function useFetchJobs() {
     search: searchParams.get("search"),
   };
 
-  return useQuery<JobListApiResponse, { status: number; message?: string }>({
+  return useQuery<JobListApiSuccessResponse, ApiError>({
     queryKey: queryKeys.jobs(filters, session?.user.id),
     queryFn: () => fetchJobs(filters),
     placeholderData: (prev) => prev,

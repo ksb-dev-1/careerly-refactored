@@ -5,13 +5,21 @@ import { getServerSession } from "@/lib/get-server-session";
 import { prisma } from "@/lib/prisma";
 import { JobListItem } from "@/types/api";
 
-export type JobListApiResponse = {
-  success: boolean;
-  jobs?: JobListItem[];
-  totalCount?: number;
-  totalPages?: number;
-  error?: string;
-};
+export interface JobListApiSuccessResponse {
+  success: true;
+  jobs: JobListItem[];
+  totalCount: number;
+  totalPages: number;
+}
+
+export interface JobListApiErrorResponse {
+  success: false;
+  error: string;
+}
+
+export type JobListApiResponse =
+  | JobListApiSuccessResponse
+  | JobListApiErrorResponse;
 
 function parseJobTypes(value: string | null): JobType[] | undefined {
   if (!value) return undefined;
