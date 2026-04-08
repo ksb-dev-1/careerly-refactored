@@ -3,7 +3,15 @@ import { NextRequest, NextResponse } from "next/server";
 import { JobMode, JobStatus, JobType, Prisma } from "@/generated/prisma/client";
 import { getServerSession } from "@/lib/get-server-session";
 import { prisma } from "@/lib/prisma";
-import { JobListApiResponse, JobListItem } from "@/types/api";
+import { JobListItem } from "@/types/api";
+
+export type JobListApiResponse = {
+  success: boolean;
+  jobs?: JobListItem[];
+  totalCount?: number;
+  totalPages?: number;
+  error?: string;
+};
 
 function parseJobTypes(value: string | null): JobType[] | undefined {
   if (!value) return undefined;
@@ -155,7 +163,6 @@ export async function GET(
           openings: true,
           jobStatus: true,
           isFeatured: true,
-          description: true,
           createdAt: true,
           updatedAt: true,
 

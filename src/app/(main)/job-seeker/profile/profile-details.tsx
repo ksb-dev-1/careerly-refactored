@@ -44,7 +44,5 @@ export function JobSeekerProfileDetails() {
     return <ServerError />;
   }
 
-  console.log(data);
-
   return <div>Job Seeker Profile Details</div>;
 }

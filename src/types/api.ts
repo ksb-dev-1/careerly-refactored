@@ -23,7 +23,7 @@ export type JobListItem = {
   companyLogo: string | null;
   companyName: string;
   role: string;
-  skills: JobSkill[];
+  skills: { skill: { id: string; name: string } }[];
   jobType: JobType;
   jobMode: JobMode;
   location: string;
@@ -40,18 +40,4 @@ export type JobListItem = {
   isBookmarked: boolean;
   appliedOn: Date | null;
   applicationStatus: ApplicationStatus | null;
-};
-
-export type JobListApiResponse = {
-  success: boolean;
-  jobs?: JobListItem[];
-  totalCount?: number;
-  totalPages?: number;
-  error?: string;
-};
-
-export type BookmarksApiResponse = {
-  success: boolean;
-  bookmarks?: JobListItem[];
-  error?: string;
 };

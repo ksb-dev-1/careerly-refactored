@@ -17,22 +17,22 @@ type ProfileWithRelations = Prisma.UserGetPayload<{
   };
 }>;
 
-export interface JobSeekerProfileDetailsSuccessResponse {
+export interface JobSeekerProfileDetailsApiSuccessResponse {
   success: true;
   profile: ProfileWithRelations | null;
 }
 
-export interface JobSeekerProfileDetailsErrorResponse {
+export interface JobSeekerProfileDetailsApiErrorResponse {
   success: false;
   error: string;
 }
 
-export type JobSeekerProfileDetailsResponse =
-  | JobSeekerProfileDetailsSuccessResponse
-  | JobSeekerProfileDetailsErrorResponse;
+export type JobSeekerProfileDetailsApiResponse =
+  | JobSeekerProfileDetailsApiSuccessResponse
+  | JobSeekerProfileDetailsApiErrorResponse;
 
 export async function GET(): Promise<
-  NextResponse<JobSeekerProfileDetailsResponse>
+  NextResponse<JobSeekerProfileDetailsApiResponse>
 > {
   const session = await getServerSession();
 
