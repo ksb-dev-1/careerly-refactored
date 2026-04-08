@@ -15,6 +15,7 @@ import {
   User,
 } from "lucide-react";
 
+import { CustomLink } from "@/components/custom-link";
 import { EditLink } from "@/components/edit-link";
 import { EmptyState } from "@/components/errors/empty-state";
 import { ServerError } from "@/components/errors/server-error";
@@ -34,6 +35,7 @@ import {
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { useFetchJobSeekerProfile } from "@/hooks/job-seeker/useFetchJobSeekerProfile";
+import { JOB_SEEKER_ROUTES } from "@/lib/routes";
 import { ProjectType, SocialLinkType } from "@/lib/validation";
 
 interface UserDetailsProps {
@@ -80,6 +82,50 @@ function UserDetails({ name, email, profileImage }: UserDetailsProps) {
   );
 }
 
+function QuickLinks() {
+  return (
+    <Card className="w-full shadow-sm">
+      <CardHeader className="border-b">
+        <CardTitle className="font-bold">Quick Links</CardTitle>
+      </CardHeader>
+
+      <CardContent className="space-y-3">
+        <CustomLink
+          href={JOB_SEEKER_ROUTES.JOBS}
+          className="flex items-center gap-2 text-sm rounded-md font-medium hover:text-brand"
+        >
+          <BriefcaseBusiness className="w-4 h-4" />
+          Jobs
+        </CustomLink>
+
+        <CustomLink
+          href={JOB_SEEKER_ROUTES.BOOKMARKS}
+          className="flex items-center gap-2 text-sm rounded-md font-medium hover:text-brand"
+        >
+          <Bookmark className="w-4 h-4" />
+          Saved
+        </CustomLink>
+
+        <CustomLink
+          href={JOB_SEEKER_ROUTES.APPLICATIONS}
+          className="flex items-center gap-2 text-sm rounded-md font-medium hover:text-brand"
+        >
+          <FileText className="w-4 h-4" />
+          Applied
+        </CustomLink>
+
+        <CustomLink
+          href={JOB_SEEKER_ROUTES.EDIT_PROFILE}
+          className="flex items-center gap-2 text-sm rounded-md font-medium hover:text-brand"
+        >
+          <Edit className="w-4 h-4" />
+          Edit Profile
+        </CustomLink>
+      </CardContent>
+    </Card>
+  );
+}
+
 export function JobSeekerProfileDetails() {
   const { data, isLoading, error } = useFetchJobSeekerProfile();
 
@@ -104,7 +150,9 @@ export function JobSeekerProfileDetails() {
         <UserDetails name={name} email={email} profileImage={image} />
 
         {/* Quick Links */}
-        <div className="hidden md:flex">{/* <QuickLinks /> */}</div>
+        <div className="hidden md:flex">
+          <QuickLinks />
+        </div>
 
         {/* Profile Progress */}
         <div className="flex md:hidden">
