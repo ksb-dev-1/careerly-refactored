@@ -38,3 +38,5 @@ export function useFetchBookmarks() {
     enabled: !!session?.user?.id,
   });
 }
+
+// ): UseQueryResult<BookmarksApiSuccessResponse, ApiError>

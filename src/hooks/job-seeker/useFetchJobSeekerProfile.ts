@@ -1,6 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { JobSeekerProfileDetailsApiResponse } from "@/app/api/job-seeker/profile/route";
+import {
+  JobSeekerProfileDetailsApiResponse,
+  JobSeekerProfileDetailsApiSuccessResponse,
+} from "@/app/api/job-seeker/profile/route";
 import { queryKeys } from "@/lib/query-keys";
 import { JOB_SEEKER_API_ROUTES } from "@/lib/routes";
 
@@ -15,7 +18,7 @@ export class ApiError extends Error {
   }
 }
 
-export async function fetchJobSeekerProfile() {
+export async function fetchJobSeekerProfile(): Promise<JobSeekerProfileDetailsApiSuccessResponse> {
   const res = await fetch(JOB_SEEKER_API_ROUTES.PROFILE_API);
   const body: JobSeekerProfileDetailsApiResponse = await res.json();
 
@@ -29,8 +32,9 @@ export async function fetchJobSeekerProfile() {
 export function useFetchJobSeekerProfile() {
   const { data: session } = useClientSession();
 
-  return useQuery<JobSeekerProfileDetailsApiResponse, ApiError>({
+  return useQuery<JobSeekerProfileDetailsApiSuccessResponse, ApiError>({
     queryKey: queryKeys.profile(session?.user.id),
     queryFn: fetchJobSeekerProfile,
+    enabled: !!session?.user?.id,
   });
 }

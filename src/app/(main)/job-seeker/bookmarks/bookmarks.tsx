@@ -16,9 +16,13 @@ export function Bookmarks() {
     return <ServerError />;
   }
 
-  const bookmarks = data?.bookmarks;
+  if (!data) {
+    return <EmptyState />;
+  }
 
-  if (!bookmarks || bookmarks.length === 0) return <EmptyState />;
+  const bookmarks = data.bookmarks;
+
+  if (bookmarks.length === 0) return <EmptyState />;
 
   return (
     <div className="grid gap-6">

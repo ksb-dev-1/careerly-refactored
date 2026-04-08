@@ -5,7 +5,11 @@ import { getServerSession } from "@/lib/get-server-session";
 import { prisma } from "@/lib/prisma";
 
 type ProfileWithRelations = Prisma.UserGetPayload<{
-  include: {
+  select: {
+    id: true;
+    name: true;
+    email: true;
+    image: true;
     jobSeekerProfile: {
       include: {
         skills: true;
@@ -19,7 +23,7 @@ type ProfileWithRelations = Prisma.UserGetPayload<{
 
 export interface JobSeekerProfileDetailsApiSuccessResponse {
   success: true;
-  profile: ProfileWithRelations | null;
+  profile: ProfileWithRelations;
 }
 
 export interface JobSeekerProfileDetailsApiErrorResponse {
@@ -38,10 +42,7 @@ export async function GET(): Promise<
 
   if (!session?.user?.id) {
     return NextResponse.json(
-      {
-        success: false,
-        error: "Authentication required",
-      },
+      { success: false, error: "Authentication required" },
       { status: 401 },
     );
   }
@@ -49,7 +50,11 @@ export async function GET(): Promise<
   try {
     const profile = await prisma.user.findUnique({
       where: { id: session.user.id },
-      include: {
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        image: true,
         jobSeekerProfile: {
           include: {
             skills: true,
@@ -61,13 +66,14 @@ export async function GET(): Promise<
       },
     });
 
-    return NextResponse.json(
-      {
-        success: true,
-        profile,
-      },
-      { status: 200 },
-    );
+    if (!profile) {
+      return NextResponse.json(
+        { success: false, error: "Profile not found" },
+        { status: 404 },
+      );
+    }
+
+    return NextResponse.json({ success: true, profile }, { status: 200 });
   } catch (error) {
     console.error("GET /api/job-seeker/profile error:", {
       userId: session.user.id,
@@ -75,10 +81,7 @@ export async function GET(): Promise<
     });
 
     return NextResponse.json(
-      {
-        success: false,
-        error: "Failed to fetch job seeker profile details",
-      },
+      { success: false, error: "Failed to fetch job seeker profile details" },
       { status: 500 },
     );
   }
