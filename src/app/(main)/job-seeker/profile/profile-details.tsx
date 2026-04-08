@@ -15,6 +15,8 @@ import {
   User,
 } from "lucide-react";
 
+import { ServerError } from "@/components/errors/server-error";
+import { Unauthenticated } from "@/components/errors/unauthenticated";
 // import TurndownService from "turndown";
 
 import { Badge } from "@/components/ui/badge";
@@ -34,6 +36,13 @@ import { ProjectType, SocialLinkType } from "@/lib/validation";
 
 export function JobSeekerProfileDetails() {
   const { data, isLoading, error } = useFetchJobSeekerProfile();
+
+  if (isLoading) return <div>Loading...</div>;
+
+  if (error) {
+    if (error.status === 401) return <Unauthenticated />;
+    return <ServerError />;
+  }
 
   console.log(data);
 

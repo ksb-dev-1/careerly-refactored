@@ -1,9 +1,39 @@
 import { NextResponse } from "next/server";
 
+import { Prisma } from "@/generated/prisma/client";
 import { getServerSession } from "@/lib/get-server-session";
 import { prisma } from "@/lib/prisma";
 
-export async function GET() {
+type ProfileWithRelations = Prisma.UserGetPayload<{
+  include: {
+    jobSeekerProfile: {
+      include: {
+        skills: true;
+        projects: true;
+        socials: true;
+      };
+    };
+    resume: true;
+  };
+}>;
+
+export interface JobSeekerProfileDetailsSuccessResponse {
+  success: true;
+  profile: ProfileWithRelations | null;
+}
+
+export interface JobSeekerProfileDetailsErrorResponse {
+  success: false;
+  error: string;
+}
+
+export type JobSeekerProfileDetailsResponse =
+  | JobSeekerProfileDetailsSuccessResponse
+  | JobSeekerProfileDetailsErrorResponse;
+
+export async function GET(): Promise<
+  NextResponse<JobSeekerProfileDetailsResponse>
+> {
   const session = await getServerSession();
 
   if (!session?.user?.id) {
@@ -43,6 +73,7 @@ export async function GET() {
       userId: session.user.id,
       error,
     });
+
     return NextResponse.json(
       {
         success: false,
