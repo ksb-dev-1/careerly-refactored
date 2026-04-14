@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function JobSeekerProfileDetailsPage() {
   return (
-    <div className="min-h-screen max-w-custom w-full mx-auto mt-32 mb-16 px-4">
+    <div className="min-h-screen max-w-4xl w-full mx-auto mt-32 mb-16 px-4">
       <JobSeekerProfileDetails />
     </div>
   );
