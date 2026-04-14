@@ -7,6 +7,8 @@ import { ProfileProgress } from "@/components/job-seeker/profile/profile-progres
 import { QuickLinks } from "@/components/job-seeker/profile/quick-links";
 import { useFetchJobSeekerProfile } from "@/hooks/job-seeker/useFetchJobSeekerProfile";
 
+import { MoreAboutJobSeeker } from "./more-about-job-seeker";
+import { UploadResume } from "./upload-resume";
 import { UserDetails } from "./user-details";
 
 export function JobSeekerProfileDetails() {
@@ -44,20 +46,23 @@ export function JobSeekerProfileDetails() {
           <ProfileProgress profile={profile} />
         </div>
 
-        {/* <UploadResume jobSeekerId={jobSeekerId} resume={details.resume} /> */}
+        <UploadResume
+        // jobSeekerId={jobSeekerId}
+        // resume={details.resume}
+        />
 
-        {/* Employer or Company Details */}
-        {/* <MoreAboutJobSeeker
-            experience={experience}
-            skills={skills}
-            projects={projects}
-            socials={socials}
-            location={location}
-            about={markdown}
-          /> */}
+        <MoreAboutJobSeeker
+        // experience={experience}
+        // skills={skills}
+        // projects={projects}
+        // socials={socials}
+        // location={location}
+        // about={markdown}
+        />
 
-        {/* Quick Links */}
-        <div className="flex md:hidden">{/* <QuickLinks /> */}</div>
+        <div className="flex md:hidden">
+          <QuickLinks />
+        </div>
       </div>
     </div>
   );
