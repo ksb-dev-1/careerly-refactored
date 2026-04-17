@@ -5,23 +5,24 @@ import { ServerError } from "@/components/errors/server-error";
 import { Unauthenticated } from "@/components/errors/unauthenticated";
 import { ProfileProgress } from "@/components/job-seeker/profile/profile-progress";
 import { QuickLinks } from "@/components/job-seeker/profile/quick-links";
+import { JobSeekerProfileDetailsSkeleton } from "@/components/skeletons/job-seeker-profile-details-skeleton";
 import { useFetchJobSeekerProfile } from "@/hooks/job-seeker/useFetchJobSeekerProfile";
 
 import { MoreAboutJobSeeker } from "./more-about-job-seeker";
 import { UploadResume } from "./upload-resume";
 import { UserDetails } from "./user-details";
 
-export function JobSeekerProfileDetails() {
-  const { data, isLoading, error } = useFetchJobSeekerProfile();
+export default function JobSeekerProfileDetails() {
+  const { data, isPending, error } = useFetchJobSeekerProfile();
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isPending) return <JobSeekerProfileDetailsSkeleton />;
 
   if (error) {
     if (error.status === 401) return <Unauthenticated />;
     return <ServerError />;
   }
 
-  if (!data) {
+  if (!data?.profile) {
     return <EmptyState />;
   }
 

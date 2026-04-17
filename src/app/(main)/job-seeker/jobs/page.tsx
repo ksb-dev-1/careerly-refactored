@@ -2,7 +2,7 @@ import { Suspense } from "react";
 
 import { Metadata } from "next";
 
-import JobsPageSkeleton from "@/components/skeletons/jobs-page-skeleton";
+import { JobsPageSkeleton } from "@/components/skeletons/jobs-page-skeleton";
 
 import { JobList } from "./job-list";
 

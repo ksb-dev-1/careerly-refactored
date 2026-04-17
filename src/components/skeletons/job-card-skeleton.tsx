@@ -57,13 +57,6 @@ export function JobCardSkeleton() {
         <CardFooter className="h-[56.79px]">
           <div className="w-full flex items-center justify-between">
             <Skeleton className="h-4 w-12" />
-
-            {/* {isFeatured && (
-                <span className="px-2 py-1 flex items-center gap-1 text-xs rounded-full bg-brand text-white dark:text-background">
-                  <FaStar className="h-3 w-3" />
-                  <span className="">Featured</span>
-                </span>
-              )} */}
           </div>
         </CardFooter>
       </Card>

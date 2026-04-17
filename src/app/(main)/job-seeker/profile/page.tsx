@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 
-import { JobSeekerProfileDetails } from "./profile-details";
+import JobSeekerProfileDetails from "./profile-details";
 
 export const metadata: Metadata = {
   title: "Profile - Careerly",

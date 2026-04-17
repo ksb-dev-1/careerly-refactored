@@ -8,7 +8,7 @@ import {
 import { Skeleton } from "../ui/skeleton";
 import { JobListSkeleton } from "./job-list-skeleton";
 
-export default function JobsPageSkeleton() {
+export function JobsPageSkeleton() {
   return (
     <div className="max-w-6xl w-full mx-auto flex items-start gap-6">
       <Card className="hidden md:flex max-w-80 w-full sticky top-24 shadow-sm">

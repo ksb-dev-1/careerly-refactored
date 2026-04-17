@@ -8,15 +8,15 @@ import { Filter } from "@/components/job-seeker/filter";
 import { JobCard } from "@/components/job-seeker/job-card";
 import { SearchInput } from "@/components/job-seeker/search-input";
 import { JobPagination } from "@/components/pagination";
-import JobsPageSkeleton from "@/components/skeletons/jobs-page-skeleton";
+import { JobsPageSkeleton } from "@/components/skeletons/jobs-page-skeleton";
 import { useFetchJobs } from "@/hooks/job-seeker/useFetchJobs";
 import { useExtractJobFilters } from "@/hooks/useExtractFilters";
 
 export function JobList() {
-  const { data, isLoading, error } = useFetchJobs();
+  const { data, isPending, error } = useFetchJobs();
   const { isFilterApplied } = useExtractJobFilters();
 
-  if (isLoading) return <JobsPageSkeleton />;
+  if (isPending) return <JobsPageSkeleton />;
 
   if (error) {
     if (error.status === 401) return <Unauthenticated />;

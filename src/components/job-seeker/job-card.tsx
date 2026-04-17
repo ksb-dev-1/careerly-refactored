@@ -167,7 +167,7 @@ export function JobCard({ job }: { job: JobListItem }) {
             </div>
           </CardContent>
 
-          <CardFooter>
+          <CardFooter className="h-[56.79px]">
             <div className="w-full flex items-center justify-between">
               <span className="text-xs">{relativeDate(createdAt)}</span>
 

@@ -8,19 +8,15 @@ import { JobListSkeleton } from "@/components/skeletons/job-list-skeleton";
 import { useFetchBookmarks } from "@/hooks/job-seeker/useFetchBookmarks";
 
 export function Bookmarks() {
-  const { data, isLoading, error } = useFetchBookmarks();
-  if (isLoading) return <JobListSkeleton />;
+  const { data, isPending, error } = useFetchBookmarks();
+  if (isPending) return <JobListSkeleton />;
 
   if (error) {
     if (error.status === 401) return <Unauthenticated />;
     return <ServerError />;
   }
 
-  if (!data) {
-    return <EmptyState />;
-  }
-
-  const bookmarks = data.bookmarks;
+  const bookmarks = data?.bookmarks ?? [];
 
   if (bookmarks.length === 0) return <EmptyState />;
 
