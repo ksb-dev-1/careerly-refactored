@@ -10,7 +10,7 @@ import { Skeleton } from "../ui/skeleton";
 
 function UserDetailsSkeleton() {
   return (
-    <Card className="relative w-full p-6 flex flex-col items-center md:items-start text-transparent min-h-48.5">
+    <Card className="relative w-full p-6 flex flex-col items-center md:items-start text-transparent min-h-48.5 min-w-[274.59px]">
       <Skeleton className="relative w-20 h-20 rounded-full border flex items-center justify-center shadow-sm" />
 
       <div className="flex flex-col items-center md:items-start text-sm">
