@@ -1,7 +1,5 @@
 "use server";
 
-import { updateTag } from "next/cache";
-
 import cloudinary from "@/lib/cloudinary";
 import { prisma } from "@/lib/prisma";
 
@@ -107,7 +105,7 @@ export async function uploadResume(
         .upload_stream(
           {
             resource_type: "raw",
-            folder: "careerly/job-seeker/resumes",
+            folder: "careerly-refactored/job-seeker/resumes",
             filename_override: cleanFileName,
             use_filename: true,
             unique_filename: true,
@@ -155,21 +153,6 @@ export async function uploadResume(
         .destroy(existingResume.publicId, { resource_type: "raw" })
         .catch(() => {});
     }
-
-    const applications = await prisma.jobApplication.findMany({
-      where: { userId },
-      select: {
-        jobId: true,
-        job: { select: { employerId: true } },
-      },
-    });
-
-    applications.forEach((app) => {
-      updateTag(`posted-job-details-${app.jobId}-${app.job.employerId}`);
-    });
-
-    updateTag(`job-details-${userId}`);
-    updateTag(`job-seeker-profile-${userId}`);
 
     return {
       success: true,

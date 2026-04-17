@@ -26,7 +26,7 @@ export function JobSeekerProfileDetails() {
   }
 
   const profile = data.profile;
-  const { name, email, image, jobSeekerProfile, resume } = profile;
+  const { id, name, email, image, jobSeekerProfile, resume } = profile;
 
   return (
     <div className="flex flex-col md:flex-row items-start gap-6">
@@ -46,10 +46,7 @@ export function JobSeekerProfileDetails() {
           <ProfileProgress profile={profile} />
         </div>
 
-        <UploadResume
-        // jobSeekerId={jobSeekerId}
-        // resume={details.resume}
-        />
+        <UploadResume userId={id} resume={resume} />
 
         <MoreAboutJobSeeker
         // experience={experience}
