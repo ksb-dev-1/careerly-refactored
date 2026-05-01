@@ -123,14 +123,11 @@ export function JobCard({ job }: { job: JobListItem }) {
           </CardHeader>
 
           <CardContent>
-            <div className="max-w-xl grid grid-cols-2 sm:grid-cols-4 gap-2 text-gray-700 dark:text-gray-300">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-gray-700 dark:text-gray-300">
               <span className="flex items-center gap-2">
                 <BriefcaseBusiness size={16} />
-                {experienceMin}-{experienceMax} years
+                {experienceMin} - {experienceMax} years
               </span>
-              {/* <span className="flex items-center gap-2">
-                {getCurrencyIcon(currency)} {formatMoney(salaryMin, currency)}
-              </span> */}
               <span className="flex items-center gap-2">
                 <Timer size={16} />
                 {formatEnums(jobType)}
@@ -139,12 +136,22 @@ export function JobCard({ job }: { job: JobListItem }) {
                 <Building size={16} />
                 {formatEnums(jobMode)}
               </span>
+              <span className="flex items-center gap-2 text-gray-700 dark:text-gray-300">
+                <MapPin size={16} />
+                {city}
+              </span>
+              <span className="hidden md:flex items-center gap-2">
+                {getCurrencyIcon(currency)} {formatMoney(salaryMin, currency)} -{" "}
+                {formatMoney(salaryMax, currency)}
+              </span>
             </div>
 
-            <span className="mt-6 flex items-center gap-2 text-gray-700 dark:text-gray-300">
-              <MapPin size={16} />
-              {city}, {state}, {country}
-            </span>
+            <div className="mt-4 text-gray-700 dark:text-gray-300 md:hidden">
+              <span className="flex items-center gap-2">
+                {getCurrencyIcon(currency)} {formatMoney(salaryMin, currency)} -{" "}
+                {formatMoney(salaryMax, currency)}
+              </span>
+            </div>
 
             <div className="mt-6 flex items-center flex-wrap gap-3">
               {/* <Layers

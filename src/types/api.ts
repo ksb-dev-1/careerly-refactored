@@ -34,8 +34,8 @@ export type JobListItem = {
   state: string | null;
   country: string | null;
 
-  salaryMin: number | null;
-  salaryMax: number | null;
+  salaryMin: number;
+  salaryMax: number;
   salaryPeriod: SalaryPeriod;
   currency: Currency;
   isSalaryVisible: boolean;

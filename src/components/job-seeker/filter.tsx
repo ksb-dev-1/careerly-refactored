@@ -11,7 +11,7 @@ import {
 
 export function Filter() {
   return (
-    <Card className="hidden md:flex max-w-80 w-full sticky top-24 shadow-sm">
+    <Card className="hidden lg:flex max-w-80 w-full sticky top-24 shadow-sm">
       <CardHeader className="border-b">
         <CardTitle>
           <p className="flex items-center gap-2">
