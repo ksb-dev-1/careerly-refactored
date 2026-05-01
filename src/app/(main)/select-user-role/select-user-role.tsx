@@ -57,7 +57,7 @@ export function SelectUserRole() {
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4">
-      <Card className="max-w-md w-full p-4 sm:p-8">
+      <Card className="max-w-sm w-full p-4 sm:p-8">
         <div className="flex flex-col gap-3">
           <h2 className="font-bold text-xl sm:text-3xl text-brand">I am a</h2>
 
@@ -73,7 +73,7 @@ export function SelectUserRole() {
                   : "translate-x-[calc(100%-8px)]"
               }`}
             >
-              {selectedRole === UserRole.JOB_SEEKER ? "Job seeker" : "Employer"}
+              {selectedRole === UserRole.JOB_SEEKER ? "Job Seeker" : "Employer"}
             </div>
 
             <button
@@ -83,7 +83,7 @@ export function SelectUserRole() {
               onClick={() => setSelectedRole(UserRole.JOB_SEEKER)}
               className="relative flex-1 py-4 text-center font-medium sm:font-semibold hover:text-brand transition-colors"
             >
-              Job seeker
+              Job Seeker
             </button>
 
             <button
@@ -102,7 +102,7 @@ export function SelectUserRole() {
           <ActionButton
             onClick={handleRoleAssign}
             loading={isPending}
-            className="w-fit rounded-full"
+            className="w-fit rounded-full px-6 py-5"
           >
             Submit
           </ActionButton>

@@ -89,12 +89,15 @@ export function JobCard({ job }: { job: JobListItem }) {
     isBookmarked,
     jobMode,
     jobType,
-    salary,
+    salaryMin,
+    salaryMax,
     currency,
     experienceMin,
     experienceMax,
     appliedOn,
-    location,
+    city,
+    state,
+    country,
     createdAt,
   } = job;
 
@@ -120,36 +123,37 @@ export function JobCard({ job }: { job: JobListItem }) {
           </CardHeader>
 
           <CardContent>
-            <div className="max-w-xl grid grid-cols-2 sm:grid-cols-3 gap-4 text-gray-700 dark:text-gray-300">
-              <span className="flex items-center gap-2 text-sm">
+            <div className="max-w-xl grid grid-cols-2 sm:grid-cols-4 gap-2 text-gray-700 dark:text-gray-300">
+              <span className="flex items-center gap-2">
                 <BriefcaseBusiness size={16} />
                 {experienceMin}-{experienceMax} years
               </span>
-              <span className="flex items-center gap-2 text-sm">
-                {getCurrencyIcon(currency)} {formatMoney(salary, currency)}
-              </span>
-              <span className="flex items-center gap-2 text-sm">
+              {/* <span className="flex items-center gap-2">
+                {getCurrencyIcon(currency)} {formatMoney(salaryMin, currency)}
+              </span> */}
+              <span className="flex items-center gap-2">
                 <Timer size={16} />
                 {formatEnums(jobType)}
               </span>
-              <span className="flex items-center gap-2 text-sm">
+              <span className="flex items-center gap-2">
                 <Building size={16} />
                 {formatEnums(jobMode)}
               </span>
-              <span className="flex items-center gap-2 text-sm">
-                <MapPin size={16} />
-                {location}
-              </span>
             </div>
 
+            <span className="mt-6 flex items-center gap-2 text-gray-700 dark:text-gray-300">
+              <MapPin size={16} />
+              {city}, {state}, {country}
+            </span>
+
             <div className="mt-6 flex items-center flex-wrap gap-3">
-              <Layers
+              {/* <Layers
                 size={16}
                 className="text-gray-600 dark:text-muted-foreground"
-              />
+              /> */}
               {skills.slice(0, 3).map((item, index) => (
                 <span key={item.skill.id} className="flex items-center gap-2">
-                  <span className="text-sm text-muted-foreground">
+                  <span className="text-xs text-muted-foreground">
                     {item.skill.name}
                   </span>
 

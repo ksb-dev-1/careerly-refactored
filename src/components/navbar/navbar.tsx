@@ -159,7 +159,8 @@ function JobSeekerNavbar({ session }: { session: UserSession }) {
               className={`${isActive ? "text-brand hover:text-brand" : ""}`}
             >
               <CustomLink href={href} prefetch={true} isActive={isActive}>
-                {icon} {label}
+                {/* {icon}  */}
+                {label}
               </CustomLink>
             </Button>
           );

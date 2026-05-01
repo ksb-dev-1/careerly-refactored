@@ -43,8 +43,11 @@ export async function GET(): Promise<NextResponse<BookmarksApiResponse>> {
             companyLogo: true,
             companyName: true,
             role: true,
+
             skills: {
               select: {
+                jobId: true,
+                skillId: true,
                 skill: {
                   select: {
                     id: true,
@@ -53,19 +56,30 @@ export async function GET(): Promise<NextResponse<BookmarksApiResponse>> {
                 },
               },
             },
+
             jobType: true,
             jobMode: true,
-            location: true,
-            salary: true,
+
+            city: true,
+            state: true,
+            country: true,
+
+            salaryMin: true,
+            salaryMax: true,
             salaryPeriod: true,
+            isSalaryVisible: true,
             currency: true,
+
             experienceMin: true,
             experienceMax: true,
+
             openings: true,
             jobStatus: true,
             isFeatured: true,
+
             createdAt: true,
             updatedAt: true,
+
             applications: {
               where: { userId: session.user.id },
               take: 1,
@@ -82,12 +96,47 @@ export async function GET(): Promise<NextResponse<BookmarksApiResponse>> {
       },
     });
 
-    const formattedJobs: JobListItem[] = bookmarks.map(({ job }) => ({
-      ...job,
-      isBookmarked: true,
-      appliedOn: job.applications[0]?.createdAt ?? null,
-      applicationStatus: job.applications[0]?.applicationStatus ?? null,
-    }));
+    const formattedJobs: JobListItem[] = bookmarks.map(({ job }) => {
+      const application = job.applications[0];
+
+      return {
+        id: job.id,
+
+        companyLogo: job.companyLogo,
+        companyName: job.companyName,
+        role: job.role,
+
+        skills: job.skills,
+
+        jobType: job.jobType,
+        jobMode: job.jobMode,
+
+        city: job.city,
+        state: job.state,
+        country: job.country,
+
+        salaryMin: job.salaryMin,
+        salaryMax: job.salaryMax,
+        salaryPeriod: job.salaryPeriod,
+        currency: job.currency,
+        isSalaryVisible: job.isSalaryVisible,
+
+        experienceMin: job.experienceMin,
+        experienceMax: job.experienceMax,
+
+        openings: job.openings,
+
+        jobStatus: job.jobStatus,
+        isFeatured: job.isFeatured,
+
+        createdAt: job.createdAt,
+        updatedAt: job.updatedAt,
+
+        isBookmarked: true,
+        appliedOn: application?.createdAt ?? null,
+        applicationStatus: application?.applicationStatus ?? null,
+      };
+    });
 
     return NextResponse.json(
       {

@@ -10,74 +10,79 @@ import {
 
 type Profile = JobSeekerProfileDetailsApiSuccessResponse["profile"];
 
+/* ✅ Safe field validator */
+function isFieldFilled(value: unknown) {
+  if (value === undefined || value === null) return false;
+
+  if (typeof value === "string") {
+    return value.trim() !== "";
+  }
+
+  if (typeof value === "number") {
+    return true;
+  }
+
+  if (Array.isArray(value)) {
+    return value.length > 0;
+  }
+
+  return Boolean(value);
+}
+
 function calculateProfileCompletion(profile: Profile) {
   const { name, email, image, jobSeekerProfile, resume } = profile;
 
+  const location = [
+    jobSeekerProfile?.city,
+    jobSeekerProfile?.state,
+    jobSeekerProfile?.country,
+  ]
+    .filter(Boolean)
+    .join(", ");
+
   const fields = [
-    { key: "name", label: "Name", value: name },
-    { key: "email", label: "Email", value: email },
+    { label: "Name", value: name },
+    { label: "Email", value: email },
+    { label: "Profile Image", value: image },
     {
-      key: "profileImage",
-      label: "Profile Image",
-      value: image,
-    },
-    {
-      key: "experience",
       label: "Experience",
       value: jobSeekerProfile?.experience,
     },
     {
-      key: "skills",
       label: "Skills",
       value: jobSeekerProfile?.skills?.length,
     },
     {
-      key: "projects",
       label: "Projects",
       value: jobSeekerProfile?.projects?.length,
     },
     {
-      key: "socials",
       label: "Social Links",
       value: jobSeekerProfile?.socials?.length,
     },
     {
-      key: "resume",
       label: "Resume",
       value: resume?.url,
     },
     {
-      key: "location",
       label: "Location",
-      value: jobSeekerProfile?.location,
+      value: location,
     },
     {
-      key: "about",
       label: "About",
       value: jobSeekerProfile?.about,
     },
   ];
 
-  const filledFields = fields.filter(
-    (field) =>
-      field.value !== undefined &&
-      field.value !== null &&
-      field.value.toString().trim() !== "",
-  );
+  const filledFields = fields.filter((field) => isFieldFilled(field.value));
 
-  const missingFields = fields.filter(
-    (field) =>
-      field.value === undefined ||
-      field.value === null ||
-      field.value.toString().trim() === "",
-  );
+  const missingFields = fields
+    .filter((field) => !isFieldFilled(field.value))
+    .map((field) => field.label);
 
   const completion = Math.round((filledFields.length / fields.length) * 100);
 
-  return {
-    completion,
-    missingFields: missingFields.map((f) => f.label),
-  };
+  return { completion, missingFields };
 }
 
 export function ProfileProgress({ profile }: { profile: Profile }) {
@@ -93,11 +98,13 @@ export function ProfileProgress({ profile }: { profile: Profile }) {
       </CardHeader>
 
       <CardContent>
+        {/* Progress header */}
         <div className="flex justify-between items-center mb-1">
           <span />
           <span className="font-semibold">{completion}%</span>
         </div>
 
+        {/* Progress bar */}
         <div className="h-2 bg-muted rounded-full overflow-hidden">
           <div
             className={`h-full rounded-full transition-all duration-500 ${
@@ -113,7 +120,8 @@ export function ProfileProgress({ profile }: { profile: Profile }) {
           />
         </div>
 
-        <div className={`${completion !== 100 ? "mt-8" : ""}`}>
+        {/* Missing fields */}
+        <div className={completion !== 100 ? "mt-8" : ""}>
           {completion === 100 ? (
             <p className="text-xs text-brand mt-2">
               Your profile is complete and visible to candidates
@@ -121,7 +129,7 @@ export function ProfileProgress({ profile }: { profile: Profile }) {
           ) : (
             <div>
               <p className="text-sm">
-                Provide follwing fields to complete your profile
+                Provide the following fields to complete your profile
               </p>
 
               <div className="flex items-center flex-wrap gap-2 mt-4">

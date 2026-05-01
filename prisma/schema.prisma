@@ -13,6 +13,14 @@ datasource db {
   provider = "postgresql"
 }
 
+/* ================= APP ENUMS ================= */
+
+enum UserRole {
+  NOT_ASSIGNED
+  JOB_SEEKER
+  EMPLOYER
+}
+
 enum JobStatus {
   OPEN
   CLOSED
@@ -20,7 +28,8 @@ enum JobStatus {
 
 enum ApplicationStatus {
   PENDING
-  APPROVED
+  REVIEWED
+  SHORTLISTED
   OFFERED
   REJECTED
 }
@@ -29,6 +38,7 @@ enum JobType {
   FULL_TIME
   PART_TIME
   INTERNSHIP
+  CONTRACT
 }
 
 enum JobMode {
@@ -48,29 +58,28 @@ enum SalaryPeriod {
   MONTHLY
 }
 
-enum UserRole {
-  JOB_SEEKER
-  EMPLOYER
-  NOT_ASSIGNED
-}
+/* ================= BETTER AUTH MODELS (SAFE EXTENDED) ================= */
 
 model User {
-  id               String    @id
-  name             String
-  email            String    @unique
-  emailVerified    Boolean   @default(false)
-  image            String?
-  imagePublicId    String?
-  role             UserRole  @default(NOT_ASSIGNED)
-  createdAt        DateTime  @default(now())
-  updatedAt        DateTime  @updatedAt
-  sessions         Session[]
-  accounts         Account[]
+  id            String    @id @default(cuid())
+  name          String
+  email         String    @unique
+  emailVerified Boolean   @default(false)
+  image         String?
 
-  bookmarks        Bookmark[]
-  applications     JobApplication[]
-  resume           Resume?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  sessions Session[]
+  accounts Account[]
+
+  /* ✅ SAFE EXTENSIONS */
+  role          UserRole  @default(NOT_ASSIGNED)
+
   jobs             Job[]
+  applications     JobApplication[]
+  bookmarks        Bookmark[]
+  resume           Resume?
   employerProfile  EmployerProfile?
   jobSeekerProfile JobSeekerProfile?
 
@@ -78,223 +87,259 @@ model User {
 }
 
 model Session {
-  id        String   @id
+  id        String   @id @default(cuid())
   expiresAt DateTime
-  token     String
+  token     String   @unique
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
   ipAddress String?
   userAgent String?
-  userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([token])
+  userId String
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   @@index([userId])
   @@map("session")
 }
 
 model Account {
-  id                    String    @id
-  accountId             String
-  providerId            String
-  userId                String
-  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id         String @id @default(cuid())
+  accountId  String
+  providerId String
+
+  userId String
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   accessToken           String?
   refreshToken          String?
   idToken               String?
   accessTokenExpiresAt  DateTime?
   refreshTokenExpiresAt DateTime?
-  scope                 String?
-  password              String?
-  createdAt             DateTime  @default(now())
-  updatedAt             DateTime  @updatedAt
 
+  scope    String?
+  password String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([providerId, accountId])
   @@index([userId])
   @@map("account")
 }
 
 model Verification {
-  id         String   @id
+  id         String   @id @default(cuid())
   identifier String
   value      String
   expiresAt  DateTime
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
 
   @@index([identifier])
   @@map("verification")
 }
 
+
+/* ================= SKILLS ================= */
+
 model Skill {
   id   String @id @default(uuid())
-  name String @unique  // e.g. "React", "Python"
+  name String @unique
 
-  jobs     JobSkill[]
-  seekers  JobSeekerProfile[] @relation("SeekerSkills")
+  jobSkills    JobSkill[]
+  seekerSkills JobSeekerSkill[]
 }
 
 model JobSkill {
   jobId   String
   skillId String
-  job     Job   @relation(fields: [jobId], references: [id], onDelete: Cascade)
-  skill   Skill @relation(fields: [skillId], references: [id], onDelete: Cascade)
+
+  job   Job   @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  skill Skill @relation(fields: [skillId], references: [id], onDelete: Cascade)
 
   @@id([jobId, skillId])
 }
 
+model JobSeekerSkill {
+  profileId String
+  skillId   String
+
+  profile JobSeekerProfile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  skill   Skill            @relation(fields: [skillId], references: [id], onDelete: Cascade)
+
+  @@id([profileId, skillId])
+}
+
+/* ================= JOB ================= */
+
 model Job {
-  id           String   @id @default(uuid())
-  employerId   String?
-  employer     User?    @relation(fields: [employerId], references: [id], onDelete: SetNull)
+  id         String  @id @default(uuid())
+  employerId String?
 
-  companyLogo  String?
-  companyName  String
-  role         String
+  employer User? @relation(fields: [employerId], references: [id], onDelete: SetNull)
 
-  jobType      JobType  @default(FULL_TIME)
-  jobMode      JobMode  @default(ONSITE)
+  companyName String
+  companyLogo String?
+  role        String
 
-  location     String
-  salary       Int
-  salaryPeriod SalaryPeriod @default(YEARLY) 
-  currency     Currency @default(INR)
+  jobType JobType @default(FULL_TIME)
+  jobMode JobMode @default(ONSITE)
 
-  experienceMin Int?
-  experienceMax Int?
+  city    String
+  state   String
+  country String
 
-  openings     Int @default(1)
+  salaryMin        Int
+  salaryMax        Int
+  currency         Currency     @default(INR)
+  salaryPeriod     SalaryPeriod @default(YEARLY)
+  isSalaryVisible  Boolean      @default(true)
 
-  skills       JobSkill[]
+  experienceMin Int
+  experienceMax Int
 
-  description  String
+  openings Int @default(1)
 
-  jobStatus    JobStatus @default(OPEN)
+  description String
 
-  isFeatured   Boolean @default(false)
-  isDeleted    Boolean @default(false)
-  deletedAt    DateTime?
+  jobStatus JobStatus @default(OPEN)
 
-  bookmarks    Bookmark[]
-  applications JobApplication[]
+  isFeatured Boolean @default(false)
+
+  isDeleted Boolean  @default(false)
+  deletedAt DateTime?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([jobStatus, isDeleted, createdAt(sort: Desc)])
+  skills       JobSkill[]
+  bookmarks    Bookmark[]
+  applications JobApplication[]
 
-  @@index([jobType])
-  @@index([jobMode])
+  @@index([jobStatus, isDeleted, createdAt(sort: Desc)])
   @@index([employerId])
-  @@index([role])         
-  @@index([location])     
-  @@index([companyName])  
-  @@index([isFeatured])
+  @@index([city, state, country])
 }
+
+/* ================= USER ACTIONS ================= */
 
 model Bookmark {
   id     String @id @default(uuid())
   userId String
   jobId  String
 
+  createdAt DateTime @default(now())
+
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   job  Job  @relation(fields: [jobId], references: [id], onDelete: Restrict)
 
-  createdAt DateTime @default(now())
-
   @@unique([userId, jobId])
-  @@index([userId])
-  @@index([jobId])
 }
 
 model JobApplication {
-  id                String            @id @default(uuid())
-  userId            String
-  jobId             String
+  id     String @id @default(uuid())
+  userId String
+  jobId  String
+
   applicationStatus ApplicationStatus @default(PENDING)
+
+  resumeUrl   String?
+  coverLetter String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   job  Job  @relation(fields: [jobId], references: [id], onDelete: Restrict)
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
   @@unique([userId, jobId])
-  @@index([jobId])
-  @@index([applicationStatus])
 }
+
+/* ================= PROFILES ================= */
 
 model Resume {
   id       String @id @default(uuid())
-  url      String
+  userId   String @unique
   publicId String
+
+  url      String
   fileName String
   fileSize Int?
 
-  userId String @unique
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model EmployerProfile {
   id     String @id @default(uuid())
   userId String @unique
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  companyName         String?
-  industry            String?
-  location            String?
-  about               String?
+  companyName String?
+  industry    String?
+  website     String?
+
+  city    String?
+  state   String?
+  country String?
+
+  about String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model JobSeekerProfile {
   id     String @id @default(uuid())
   userId String @unique
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   experience Int?
-  skills     Skill[]  @relation("SeekerSkills")
 
-  projects   Project[]
-  socials    SocialLink[]
+  city    String?
+  state   String?
+  country String?
 
-  location String?
-  about    String?
+  about String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  skills   JobSeekerSkill[]
+  projects Project[]
+  socials  SocialLink[]
 }
 
 model Project {
-  id                 String @id @default(uuid())
-  jobSeekerProfileId String
-  jobSeekerProfile JobSeekerProfile @relation(fields: [jobSeekerProfileId], references: [id], onDelete: Cascade)
+  id        String @id @default(uuid())
+  profileId String
 
   name String
   link String
 
   createdAt DateTime @default(now())
 
-  @@index([jobSeekerProfileId])
+  profile JobSeekerProfile @relation(fields: [profileId], references: [id], onDelete: Cascade)
 }
 
 model SocialLink {
-  id                 String @id @default(uuid())
-  jobSeekerProfileId String
-  jobSeekerProfile JobSeekerProfile @relation(fields: [jobSeekerProfileId], references: [id], onDelete: Cascade)
+  id        String @id @default(uuid())
+  profileId String
 
   platform String
   url      String
 
   createdAt DateTime @default(now())
 
-  @@index([jobSeekerProfileId])
+  profile JobSeekerProfile @relation(fields: [profileId], references: [id], onDelete: Cascade)
 }
-
 // enum Category {
 //   DEVELOPMENT
 //   UI_UX_DESIGN

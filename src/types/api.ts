@@ -20,23 +20,38 @@ export type JobSkill = {
 
 export type JobListItem = {
   id: string;
+
   companyLogo: string | null;
   companyName: string;
   role: string;
-  skills: { skill: { id: string; name: string } }[];
+
+  skills: JobSkill[];
+
   jobType: JobType;
   jobMode: JobMode;
-  location: string;
-  salary: number;
+
+  city: string | null;
+  state: string | null;
+  country: string | null;
+
+  salaryMin: number | null;
+  salaryMax: number | null;
   salaryPeriod: SalaryPeriod;
   currency: Currency;
+  isSalaryVisible: boolean;
+
   experienceMin: number | null;
   experienceMax: number | null;
+
   openings: number;
+
   jobStatus: JobStatus;
   isFeatured: boolean;
+
   createdAt: Date;
   updatedAt: Date;
+
+  // user-specific
   isBookmarked: boolean;
   appliedOn: Date | null;
   applicationStatus: ApplicationStatus | null;

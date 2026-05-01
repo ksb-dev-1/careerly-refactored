@@ -129,10 +129,10 @@ export async function GET(
       conditions.push({
         AND: [
           {
-            OR: [{ experienceMin: null }, { experienceMin: { lte: expMax } }],
+            OR: [{ experienceMin: { lte: expMax } }],
           },
           {
-            OR: [{ experienceMax: null }, { experienceMax: { gte: expMin } }],
+            OR: [{ experienceMax: { gte: expMin } }],
           },
         ],
       });
@@ -162,9 +162,13 @@ export async function GET(
           },
           jobType: true,
           jobMode: true,
-          location: true,
-          salary: true,
+          city: true,
+          state: true,
+          country: true,
+          salaryMin: true,
+          salaryMax: true,
           salaryPeriod: true,
+          isSalaryVisible: true,
           currency: true,
           experienceMin: true,
           experienceMax: true,
