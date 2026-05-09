@@ -7,22 +7,21 @@ import {
 } from "../ui/card";
 import { Separator } from "../ui/separator";
 import { Skeleton } from "../ui/skeleton";
+import { UploadResumeSkeleton } from "./upload-resume-skeleton";
 
 function UserDetailsSkeleton() {
   return (
-    <Card className="relative w-full p-6 flex flex-col items-center md:items-start text-transparent min-h-48.5 min-w-[274.59px]">
-      <Skeleton className="relative w-20 h-20 rounded-full border flex items-center justify-center shadow-sm" />
+    <Card className="relative w-full flex flex-col items-center md:items-start shadow-sm">
+      <CardContent>
+        <Skeleton className="relative w-16 h-16 rounded-xl border flex items-center justify-center shadow-sm" />
 
-      <div className="flex flex-col items-center md:items-start text-sm">
-        <Skeleton className="w-fit text-center md:text-start capitalize font-bold">
-          User Name
-        </Skeleton>
-        <Skeleton className="flex items-center gap-2 mt-2 text-center md:text-start">
-          johndoe@gmail.com
-        </Skeleton>
-      </div>
+        <div className="mt-4 text-transparent">
+          <Skeleton className="h-5 w-20 text-center md:text-start capitalize font-bold" />
+          <Skeleton className="flex h-5 w-50 items-center gap-2 mt-2 text-center md:text-start" />
+        </div>
 
-      <Skeleton className="h-8 w-8 rounded-lg absolute top-4 right-4" />
+        <Skeleton className="h-8 w-8 rounded-lg absolute top-4 right-4" />
+      </CardContent>
     </Card>
   );
 }
@@ -56,35 +55,24 @@ function QuickLinksSkeleton() {
 
 function ProfileProgressSkeleton() {
   return (
-    <Card className="relative w-full text-transparent min-h-53.5">
+    <Card className="relative w-full text-transparent">
       <CardHeader>
         <CardTitle>
-          <Skeleton className="w-fit text-lg font-bold">
-            Profile Progress
-          </Skeleton>
+          <Skeleton className="text-lg font-bold h-5 w-40" />
         </CardTitle>
         <CardDescription>
-          <Skeleton className="w-fit text-transparent">
-            A stronger profile increases your chances of getting hired.
-          </Skeleton>
+          <Skeleton className="text-transparent h-5 w-50%" />
         </CardDescription>
       </CardHeader>
 
-      <CardContent className="mt-6">
-        <Skeleton className="h-2 rounded-full" />
+      <CardContent>
+        <Skeleton className="mt-6 h-2 rounded-full" />
 
-        <Skeleton className="h-5 my-4 w-[75%]" />
+        <Skeleton className="h-5 mt-8 mb-4 w-[75%]" />
 
-        <div className="flex items-center flex-wrap gap-2 mt-4">
-          {[1, 2, 3, 4].map((num) => (
-            <Skeleton
-              key={num}
-              className="w-20 px-2 py-0.5 rounded-full text-xs"
-            >
-              skill
-            </Skeleton>
-          ))}
-        </div>
+        <Skeleton className="px-2 py-0.5 rounded-full text-xs w-full">
+          skill
+        </Skeleton>
       </CardContent>
     </Card>
   );
@@ -95,7 +83,8 @@ function MoreAboutJobSeekerSkeleton() {
     <Card className="w-full text-transparent">
       <CardHeader>
         <CardTitle>
-          <Skeleton className="text-lg font-bold">More Details</Skeleton>
+          <Skeleton className="text-lg font-bold h-6 w-30" />
+          <Skeleton className="text-sm h-5 w-50 mt-1" />
         </CardTitle>
       </CardHeader>
 
@@ -109,13 +98,9 @@ function MoreAboutJobSeekerSkeleton() {
                 Skills
               </Skeleton>
 
-              <div className="flex flex-wrap gap-2">
-                {[1, 2, 3, 4].map((num) => (
-                  <Skeleton key={num} className="px-2 py-0.5 rounded-full w-20">
-                    skill
-                  </Skeleton>
-                ))}
-              </div>
+              <Skeleton className="px-2 py-0.5 rounded-full w-80">
+                skill
+              </Skeleton>
             </div>
 
             <div className="space-y-4">
@@ -194,6 +179,8 @@ export function JobSeekerProfileDetailsSkeleton() {
         <div className="hidden md:flex">
           <ProfileProgressSkeleton />
         </div>
+
+        <UploadResumeSkeleton />
 
         <MoreAboutJobSeekerSkeleton />
 

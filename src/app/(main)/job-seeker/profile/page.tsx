@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 
-import JobSeekerProfileDetails from "./profile-details";
+import JobSeekerProfileDetails from "./job-seeker-profile-details";
 
 export const metadata: Metadata = {
   title: "Profile - Careerly",
@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function JobSeekerProfileDetailsPage() {
   return (
-    <div className="min-h-screen max-w-4xl w-full mx-auto mt-32 mb-16 px-4">
+    <div className="min-h-screen max-w-5xl w-full mx-auto mt-32 mb-16 px-4">
       <JobSeekerProfileDetails />
     </div>
   );

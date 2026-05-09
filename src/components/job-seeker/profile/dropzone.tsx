@@ -32,7 +32,7 @@ export function Dropzone({
 
   return (
     <div
-      className="relative border-2 border-dashed rounded-xl h-40 flex items-center justify-center"
+      className="relative border-2 border-dashed rounded-xl h-40 flex items-center justify-center hover:bg-muted-foreground/10 dark:hover:bg-background/20"
       onDragOver={(e) => e.preventDefault()}
       onDrop={(e) => {
         e.preventDefault();

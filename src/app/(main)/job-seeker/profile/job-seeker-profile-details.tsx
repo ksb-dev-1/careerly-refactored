@@ -3,14 +3,13 @@
 import { EmptyState } from "@/components/errors/empty-state";
 import { ServerError } from "@/components/errors/server-error";
 import { Unauthenticated } from "@/components/errors/unauthenticated";
+import { MoreAboutJobSeeker } from "@/components/job-seeker/profile/more-about-job-seeker";
 import { ProfileProgress } from "@/components/job-seeker/profile/profile-progress";
 import { QuickLinks } from "@/components/job-seeker/profile/quick-links";
+import { UploadResume } from "@/components/job-seeker/profile/upload-resume";
+import { UserDetails } from "@/components/job-seeker/profile/user-details";
 import { JobSeekerProfileDetailsSkeleton } from "@/components/skeletons/job-seeker-profile-details-skeleton";
 import { useFetchJobSeekerProfile } from "@/hooks/job-seeker/useFetchJobSeekerProfile";
-
-import { MoreAboutJobSeeker } from "./more-about-job-seeker";
-import { UploadResume } from "./upload-resume";
-import { UserDetails } from "./user-details";
 
 export default function JobSeekerProfileDetails() {
   const { data, isPending, error } = useFetchJobSeekerProfile();

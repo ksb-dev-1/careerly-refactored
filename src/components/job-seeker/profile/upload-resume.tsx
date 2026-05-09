@@ -163,20 +163,22 @@ export function UploadResume({ userId, resume }: UploadResumeProps) {
           </div>
         )}
 
-        <Button
-          onClick={handleUpload}
-          disabled={!file || isPending}
-          className="w-full bg-brand hover:bg-brand-hover"
-        >
-          {isPending ? (
-            <>
-              Uploading
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            </>
-          ) : (
-            "Upload Resume"
-          )}
-        </Button>
+        {file && (
+          <Button
+            onClick={handleUpload}
+            disabled={!file || isPending}
+            className="w-full bg-brand hover:bg-brand-hover"
+          >
+            {isPending ? (
+              <>
+                Uploading
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              </>
+            ) : (
+              "Upload Resume"
+            )}
+          </Button>
+        )}
       </CardContent>
     </Card>
   );

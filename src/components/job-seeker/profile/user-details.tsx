@@ -13,7 +13,7 @@ interface UserDetailsProps {
 
 export function UserDetails({ name, email, profileImage }: UserDetailsProps) {
   return (
-    <Card className="relative w-full flex flex-col items-center md:items-start shadow-sm">
+    <Card className="relative w-full flex flex-col items-start shadow-sm">
       <CardContent>
         {profileImage ? (
           <div className="relative w-16 h-16 rounded-xl border shadow-sm overflow-hidden">
@@ -33,7 +33,7 @@ export function UserDetails({ name, email, profileImage }: UserDetailsProps) {
         )}
 
         <div className="mt-4">
-          <CardTitle className="text-center md:text-start capitalize font-bold">
+          <CardTitle className="text-start capitalize font-bold">
             {name || "Anonymous User"}
           </CardTitle>
           <p className="flex items-center gap-2 mt-2 text-muted-foreground text-center md:text-start">
